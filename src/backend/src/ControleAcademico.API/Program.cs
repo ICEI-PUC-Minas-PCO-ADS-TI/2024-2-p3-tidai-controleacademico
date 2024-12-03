@@ -39,6 +39,8 @@ builder.Services.AddScoped<IRelacionamentoUsuarioDisciplinaService, Relacionamen
 builder.Services.AddScoped<IUsuarioRepo, UsuarioRepo>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
+builder.Services.AddScoped<IEntregarTarefaRepo, EntregarTarefaRepo>();
+builder.Services.AddScoped<IEntregarTarefaService, EntregarTarefaService>();
 
 // Configurando CORS
 builder.Services.AddCors(options =>

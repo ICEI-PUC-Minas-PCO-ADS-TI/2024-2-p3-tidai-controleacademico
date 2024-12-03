@@ -10,6 +10,7 @@ public partial class MaterialDisciplina
     public string? LinkVideoaula { get; set; }
     public string? Descricao { get; set; }
     public int IdDisciplinas { get; set; }
+    public string? Img { get; set; } // Nova coluna 'Img'
 
     public virtual Disciplina? IdDisciplinasNavigation { get; set; } = null!;
 }
