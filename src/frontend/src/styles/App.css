@@ -31,24 +31,24 @@
 }
 
 /* login */
-.login-page .App-header {
-  background-color: transparent;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   text-align: center;
-  color: rgb(255, 255, 255);
 }
-.login-page .btn-custom-w-100-mb-1 {
-  background-color: #416bf5; 
-  color: rgb(255, 255, 255); 
-  border: 1px solid #ccc;
-  width: 100%; 
-  margin-bottom: 1rem;
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #007bff;
 }
-.login-page .btn-custom-w-100-mb-1:hover {
-  background-color: #170ffe ;
-  color: aliceblue;
-} 
+.login-logo {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+.btn-custom {
+  background-color: #003366;
+  color: white;
+}

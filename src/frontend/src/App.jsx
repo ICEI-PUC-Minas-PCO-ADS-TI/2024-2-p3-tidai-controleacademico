@@ -20,6 +20,8 @@ import IndexAluno from './views/Aluno';
 import ControleAluno from './views/Aluno/Painel';
 import AtividadeAluno from './views/Aluno/Atividades';
 import RelatorioAluno from './views/Aluno/Relatorio';
+import AulaProf from './views/Professor/Aula';
+import DisciplinaProf from './views/Professor/Disciplina';
 
 
 export default function App() {
@@ -45,6 +47,10 @@ export default function App() {
         <Route index element={<Navigate to="index" replace />} />
         <Route path="index" element={<IndexProf />} />
         <Route path="painel" element={<ControleProf />} />
+
+        <Route path="disciplina" element={<DisciplinaProf />} />
+        <Route path="aula" element={<AulaProf />} />
+
         <Route path="atividade" element={<AtividadeProf />} />
         <Route path="chamada" element={<ChamadaProf />} />
         <Route path="relatorios" element={<RelatorioProf />} />

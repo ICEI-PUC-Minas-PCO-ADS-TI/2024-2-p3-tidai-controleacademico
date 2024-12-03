@@ -2,16 +2,3 @@
 
 ------------Gerar Contexto do BD----------
 dotnet ef dbcontext scaffold "Server=localhost;Database=controle_academico;User=root;Password=123456;" Pomelo.EntityFrameworkCore.MySql -o Entities
-
-------------Na API---------------
-dotnet tool install --global dotnet-ef
-dotnet add package Microsoft.EntityFrameworkCore --version 7.0.10
-dotnet add package Microsoft.EntityFrameworkCore.Design --version 7.0.10
-dotnet add package Microsoft.EntityFrameworkCore.Tools --version 7.0.10
-dotnet add package Pomelo.EntityFrameworkCore.MySql --version 7.0.0
-
-
-----------Criar soluçãoo
-dotnet add ControleAcademico.API reference ControleAcademico.Data
-dotnet add ControleAcademico.API reference ControleAcademico.Domain
-

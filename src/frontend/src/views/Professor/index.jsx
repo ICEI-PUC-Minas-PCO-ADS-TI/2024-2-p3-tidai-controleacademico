@@ -15,8 +15,12 @@ export default function IndexProf() {
 
     return (
         <div className="container height-100 d-flex flex-column justify-content-center align-items-center text-center">
-            <h1>Seja Bem-Vindo, {nomeUsuario || 'Usuário'}</h1>
-            <p className="motivational-quote"><i></i>"O sucesso é a soma de pequenos esforços repetidos dia após dia."</p>
+            <div class="h-10">
+                <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/15668053-modelo-de-design-de-logotipo-da-faculdade-ilustracaoial-logotipo-da-faculdade-da-universidade-distintivos-emblemas-sinais-estoque-logotipo-do-campus-da-faculdade-gratis-vetor.jpg"
+                    alt="Logo da UNIBH" class="login-logo" />
+            </div>
+            <h1>Seja Bem-Vindo, {nomeUsuario || 'Usuário'} !</h1>
+            <p className="motivational-quote"><i>"O sucesso é a soma de pequenos esforços repetidos dia após dia."</i></p>
         </div>
     );
 

@@ -8,7 +8,7 @@ export default function ViewIndex() {
         <div className='body'>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">UNIBH</Link>
+                    <Link className="navbar-brand" to="/">UNIBETIM</Link>
                     <div className="d-flex">
                         <Link to="/login" className="btn btn-primary login-btn">Login Acadêmico</Link>
                     </div>
@@ -17,7 +17,7 @@ export default function ViewIndex() {
 
             <section className="hero-section">
                 <div className="container">
-                    <h1>Bem-vindo à UNIBH</h1>
+                    <h1>Bem-vindo à UNIBETIM</h1>
                     <p>Confira as últimas novidades, bolsas e notícias da nossa comunidade acadêmica.</p>
                 </div>
             </section>
@@ -79,10 +79,10 @@ export default function ViewIndex() {
                 <div className="container">
                     <img 
                         src="https://static.vecteezy.com/ti/vetor-gratis/p1/15668053-modelo-de-design-de-logotipo-da-faculdade-ilustracaoial-logotipo-da-faculdade-da-universidade-distintivos-emblemas-sinais-estoque-logotipo-do-campus-da-faculdade-gratis-vetor.jpg" 
-                        alt="Logo da UNIBH" 
+                        alt="Logo da UNIBETIM" 
                         className="footer-logo mb-3"
                     />
-                    <p>&copy; 2024 Faculdade UNIBH. Todos os direitos reservados.</p>
+                    <p>&copy; 2024 Faculdade UNIBETIM. Todos os direitos reservados.</p>
                     <p>Faça parte da nossa comunidade acadêmica e transforme seu futuro!</p>
                     
                     <ul className="footer-social-icons">
@@ -92,7 +92,7 @@ export default function ViewIndex() {
                         <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="bi bi-linkedin"></i></a></li>
                     </ul>
 
-                    <p>Contatos: <br /> Telefone: (31) 1234-5678 <br /> Email: contato@unibh.edu.br</p>
+                    <p>Contatos: <br /> Telefone: (31) 1234-5678 <br /> Email: contato@unibETIM.edu.br</p>
                 </div>
             </footer>
             <div className="content">
