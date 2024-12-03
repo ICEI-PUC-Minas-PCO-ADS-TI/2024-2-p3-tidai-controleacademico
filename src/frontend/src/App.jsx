@@ -4,7 +4,7 @@ import { Routes, Route,   Navigate } from 'react-router-dom';
 
 import ViewIndex from './views';
 import ViewLogin from './views/login';
-import MenuSecretario from './views/secretario/Menu';
+import MenuSecretario from './views/secretario/menu';
 import ViewInicial from './views/secretario';
 import ViewCadastroUser from './views/secretario/CadastroUsuario';
 import ViewCadastroCurso from './views/secretario/CadastroCurso';
