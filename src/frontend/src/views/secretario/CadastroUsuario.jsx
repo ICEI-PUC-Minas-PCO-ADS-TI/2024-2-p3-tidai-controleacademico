@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import '../../styles/index.css';
 import UsuarioForm from '../../components/secretario/UsuarioForm';
 import UsuarioLista from '../../components/secretario/UsuarioLista';
+import UsuarioDisciplina from '../../components/secretario/UsuarioDisicplina';
 import api from '../../api/api';
 
 const ViewCadastroUser = () => {
@@ -11,8 +12,11 @@ const ViewCadastroUser = () => {
 
   const [showUsuarioModal, setShowUsuarioModal] = useState(false);
   const [smShowConfirmModal, setSmShowConfirmModal] = useState(false);
+  const [showShowDisciplinaModal, setshowShowDisciplinaModal] = useState(false);
 
   const handleUsuarioModal = () =>
+    setShowUsuarioModal(!showUsuarioModal);
+  const handleDisciplinaModal = () =>
     setShowUsuarioModal(!showUsuarioModal);
 
   const handleConfirmModal = (matricula) => {
@@ -60,34 +64,34 @@ const ViewCadastroUser = () => {
     handleConfirmModal(0);
 
     try {
-        const response = await api.delete(`Usuarios/${matricula}`);
-        
-        // Se a exclusão for bem-sucedida, atualize o estado
-        const usuariosFiltrados = usuarios.filter(
-            (usuario) => usuario.matricula !== matricula
-        );
-        setUsuarios([...usuariosFiltrados]);
+      const response = await api.delete(`Usuarios/${matricula}`);
+
+      // Se a exclusão for bem-sucedida, atualize o estado
+      const usuariosFiltrados = usuarios.filter(
+        (usuario) => usuario.matricula !== matricula
+      );
+      setUsuarios([...usuariosFiltrados]);
 
     } catch (error) {
-        // Exibe a mensagem de erro se não for possível excluir o usuário
-        if (error.response && error.response.data) {
-            const errorMessage = error.response.data.message || "Não é permitido excluir o usuário pois possuí informações cadastrados.";
-            setErrorMessage(errorMessage);  // Armazena a mensagem de erro
+      // Exibe a mensagem de erro se não for possível excluir o usuário
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message || "Não é permitido excluir o usuário pois possuí informações cadastrados.";
+        setErrorMessage(errorMessage);  // Armazena a mensagem de erro
 
-            // Remove a mensagem de erro após 3 segundos
-            setTimeout(() => {
-                setErrorMessage('');
-            }, 3000);  // 3000 milissegundos = 3 segundos
-        } else {
-            setErrorMessage("Erro desconhecido ao tentar excluir o usuário.");
+        // Remove a mensagem de erro após 3 segundos
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);  // 3000 milissegundos = 3 segundos
+      } else {
+        setErrorMessage("Erro desconhecido ao tentar excluir o usuário.");
 
-            // Remove a mensagem de erro após 3 segundos
-            setTimeout(() => {
-                setErrorMessage('');
-            }, 3000);  // 3000 milissegundos = 3 segundos
-        }
+        // Remove a mensagem de erro após 3 segundos
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);  // 3000 milissegundos = 3 segundos
+      }
     }
-}
+  }
 
 
 
@@ -117,24 +121,24 @@ const ViewCadastroUser = () => {
     nome: '',
     cpf: '',
     tipo: '',
-});
-const filtrarUsuarios = () => {
+  });
+  const filtrarUsuarios = () => {
     const usuariosFiltrados = usuarios.filter((usuario) => {
-        return (
-            (filtros.matricula === '' || usuario.matricula.toString().includes(filtros.matricula)) &&
-            (filtros.nome === '' || usuario.nome.toLowerCase().includes(filtros.nome.toLowerCase())) &&
-            (filtros.cpf === '' || usuario.cpf.includes(filtros.cpf)) &&
-            (filtros.tipo === '' || usuario.tipo === filtros.tipo) // Verifique a comparação correta
-        );
+      return (
+        (filtros.matricula === '' || usuario.matricula.toString().includes(filtros.matricula)) &&
+        (filtros.nome === '' || usuario.nome.toLowerCase().includes(filtros.nome.toLowerCase())) &&
+        (filtros.cpf === '' || usuario.cpf.includes(filtros.cpf)) &&
+        (filtros.tipo === '' || usuario.tipo === filtros.tipo) // Verifique a comparação correta
+      );
     });
     setUsuarios(usuariosFiltrados);
-};
+  };
 
-const limparFiltros = async () => {
-  setFiltros({ matricula: '', nome: '', cpf: '', tipo: '' });
-  const todasUsuarios = await pegaTodosUsuarios();
-  setUsuarios(todasUsuarios);
-};
+  const limparFiltros = async () => {
+    setFiltros({ matricula: '', nome: '', cpf: '', tipo: '' });
+    const todasUsuarios = await pegaTodosUsuarios();
+    setUsuarios(todasUsuarios);
+  };
 
   return (
     <div className="height-100">
@@ -146,7 +150,7 @@ const limparFiltros = async () => {
             <input
               type="text"
               className="form-control"
-              placeholder="matricula"
+              placeholder="Matricula"
               value={filtros.matricula}
               onChange={(e) => setFiltros({ ...filtros, matricula: e.target.value })}
             />
@@ -170,16 +174,16 @@ const limparFiltros = async () => {
             />
           </div>
           <div className="col-2">
-          <select
-  className="form-select"
-  value={filtros.tipo}
-  onChange={(e) => setFiltros({ ...filtros, tipo: e.target.value ? parseInt(e.target.value) : '' })}
->
-  <option value="">Todos</option>
-  <option value="0">Alunos</option>
-  <option value="1">Professores</option>
-  <option value="2">Secretário</option>
-</select>
+            <select
+              className="form-select"
+              value={filtros.tipo}
+              onChange={(e) => setFiltros({ ...filtros, tipo: e.target.value ? parseInt(e.target.value) : '' })}
+            >
+              <option value="">Todos</option>
+              <option value="0">Alunos</option>
+              <option value="1">Professores</option>
+              <option value="2">Secretário</option>
+            </select>
 
           </div>
           <div className="col-4">
@@ -195,10 +199,10 @@ const limparFiltros = async () => {
           </div>
         </div>
         {errorMessage && (
-    <div className="alert alert-danger mt-3">
-        {errorMessage}
-    </div>
-)}
+          <div className="alert alert-danger mt-3">
+            {errorMessage}
+          </div>
+        )}
 
 
 
@@ -212,7 +216,7 @@ const limparFiltros = async () => {
               <th scope="col">Email</th>
               <th scope="col">Endereço</th>
               <th scope="col">Tipo</th>
-              <th scope="col">Curso</th>
+              <th></th>
               <th></th>
               <th></th>
             </tr>
@@ -225,6 +229,7 @@ const limparFiltros = async () => {
               usuario={usuario}
               usuarios={usuarios}
               handleConfirmModal={handleConfirmModal}
+              handleDisciplinaModal={handleDisciplinaModal}
             />
           </tbody>
         </table>
@@ -247,18 +252,16 @@ const limparFiltros = async () => {
         </Modal>
 
         <Modal
-          size='sm'
           show={smShowConfirmModal}
           onHide={handleConfirmModal}
         >
           <Modal.Header closeButton>
             <Modal.Title>
-              Excluindo Usuario{' '}
-              {usuario.matricula !== 0 ? usuario.matricula : ''}
+              Exclur Usuario
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Tem certeza que deseja Excluir o Usuario {usuario.matricula}
+            Tem certeza que deseja Excluir o Usuario de Matricula {usuario.matricula}?
           </Modal.Body>
           <Modal.Footer className='d-flex justify-content-between'>
             <button
@@ -274,6 +277,31 @@ const limparFiltros = async () => {
             >
               <i className='fas fa-times me-2'></i>
               Não
+            </button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={showShowDisciplinaModal}
+          onHide={handleDisciplinaModal}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Disciplinas do Usuário
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <UsuarioDisciplina />
+          </Modal.Body>
+          <Modal.Footer className='d-flex justify-content-between'>
+            <button>
+              Fechar
+            </button>
+            <button
+              className='btn btn-danger me-2'
+              onClick={() => handleDisciplinaModal(0)}
+            >
+              Salvar
             </button>
           </Modal.Footer>
         </Modal>

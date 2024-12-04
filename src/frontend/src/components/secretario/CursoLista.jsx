@@ -11,7 +11,6 @@ const CursoLista = (props) => {
           <th scope="col">Disciplinas</th>
           <th></th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody className="table-group-divider">

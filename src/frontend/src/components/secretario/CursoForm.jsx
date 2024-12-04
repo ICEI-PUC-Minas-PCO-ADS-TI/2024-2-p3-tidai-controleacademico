@@ -2,16 +2,15 @@ import { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 
 const cursoInicial = {
-    idCurso: 0,
+    idCursos: 0,
     nome: '',
-    descricao: '',
+    nivel: '',
     tipo: '',
-    duracao: '',
 };
 
 export default function CursoForm(props) {
     const cursoAtual = () => {
-        if (props.cursoSelecionado.idCurso !== 0) {
+        if (props.cursoSelecionado.idCursos !== 0) {
             return props.cursoSelecionado;
         } else {
             return cursoInicial;
@@ -21,7 +20,7 @@ export default function CursoForm(props) {
     const [curso, setCurso] = useState(cursoAtual());
 
     useEffect(() => {
-        if (props.cursoSelecionado.idCurso !== 0) setCurso(props.cursoSelecionado);
+        if (props.cursoSelecionado.idCursos !== 0) setCurso(props.cursoSelecionado);
     }, [props.cursoSelecionado]);
 
     const inputTextHandler = (e) => {
@@ -32,27 +31,24 @@ export default function CursoForm(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Validação de todos os campos obrigatórios
-        if (
-            !curso.nome.trim() ||
-            !curso.descricao.trim() ||
-            curso.tipo === '' ||
-            !curso.duracao.trim()
-        ) {
+    
+        // Verifica se o nome está definido e se não está vazio
+        if (!curso.nome || curso.nome.trim() === '' || curso.nivel === '' || curso.tipo === '') {
             alert('Por favor, preencha todos os campos obrigatórios.');
             return;
         }
-
+    
         // Verifique se está atualizando ou adicionando
-        if (props.cursoSelecionado.idCurso !== 0) {
+        if (props.cursoSelecionado.idCursos !== 0) {
             props.atualizarCurso(curso);
         } else {
             props.addCurso(curso);
         }
-
+    
         setCurso(cursoInicial);
+        window.location.reload();
     };
+    
 
     const handleCancelar = (e) => {
         e.preventDefault();
@@ -79,7 +75,7 @@ export default function CursoForm(props) {
                         required
                     />
                 </div>
-                {/* nivel */}
+                {/* Nivel */}
                 <div className="col-md-6">
                     <label htmlFor="nivel" className="form-label">
                         Nivel <span style={{ color: 'red' }}>*</span>
@@ -93,9 +89,10 @@ export default function CursoForm(props) {
                         required
                     >
                         <option value="">Selecione</option>
-                        <option value="Presencial">Presencial</option>
-                        <option value="EAD">EAD</option>
-                        <option value="Misto">Misto</option>
+                        <option value="Graduação">Graduação</option>
+                        <option value="PósGraduação">PósGraduação</option>
+                        <option value="Doutorado">Doutorado</option>
+                        <option value="Mestrado">Mestrado</option>
                     </select>
                 </div>
                 {/* Tipo */}
@@ -113,17 +110,15 @@ export default function CursoForm(props) {
                     >
                         <option value="">Selecione</option>
                         <option value="Presencial">Presencial</option>
-                        <option value="EAD">EAD</option>
+                        <option value="Ead">EAD</option>
                         <option value="Misto">Misto</option>
                     </select>
                 </div>
 
-
-
                 {/* Botões */}
                 <div className="row mt-4 border-top">
                     <div className="col-6">
-                        {curso.id === 0 ? (
+                        {curso.idCursos === 0 ? (
                             <Button variant="secondary" onClick={props.handleClose}>
                                 Fechar
                             </Button>

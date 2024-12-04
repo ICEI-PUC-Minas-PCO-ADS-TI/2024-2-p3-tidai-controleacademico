@@ -9,13 +9,6 @@
 }
 
 
-a {
-    text-decoration: none
-}
-
-
-
-
 .l-navbar {
     position: fixed;
     top: 0;
@@ -34,6 +27,7 @@ a {
 
 .nav_logo,
 .nav_link {
+    text-decoration: none;
     display: grid;
     grid-template-columns: max-content max-content;
     align-items: center;

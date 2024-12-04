@@ -6,27 +6,28 @@ import CursoLista from '../../components/secretario/CursoLista';
 import api from '../../api/api';
 
 const ViewCadastroCurso = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const [showCursoModal, setShowCursoModal] = useState(false);
   const [smShowConfirmModal, setSmShowConfirmModal] = useState(false);
+  const [cursos, setCursos] = useState([]);
+  const [curso, setCurso] = useState({ idCursos: 0 });
+  const [filtros, setFiltros] = useState({
+    idCursos: '',
+    nome: '',
+    nivel: '',
+    tipo: '',
+  });
 
   const handleCursoModal = () => setShowCursoModal(!showCursoModal);
 
   const handleConfirmModal = (idCursos) => {
     if (idCursos !== 0 && idCursos !== undefined) {
-      const curso = cursos.filter((curso) => curso.idCursos === idCursos);
-      setCurso(curso[0]);
+      const cursoSelecionado = cursos.find((curso) => curso.idCursos === idCursos);
+      setCurso(cursoSelecionado || { idCursos: 0 });
     } else {
       setCurso({ idCursos: 0 });
     }
     setSmShowConfirmModal(!smShowConfirmModal);
-  };
-
-  const [cursos, setCursos] = useState([]);
-  const [curso, setCurso] = useState({ idCursos: 0 });
-
-  const novoCurso = () => {
-    setCurso({ idCursos: 0 });
-    handleCursoModal();
   };
 
   const pegaTodosCursos = async () => {
@@ -34,13 +35,15 @@ const ViewCadastroCurso = () => {
     return response.data;
   };
 
-  useEffect(() => {
-    const getCursos = async () => {
-      const todosCursos = await pegaTodosCursos();
-      if (todosCursos) setCursos(todosCursos);
-    };
-    getCursos();
-  }, []);
+useEffect(() => {
+  const getCursos = async () => {
+    const todosCursos = await pegaTodosCursos();
+    // Filtra cursos para remover os com idCursos = 0
+    const cursosFiltrados = todosCursos.filter(curso => curso.idCursos !== 0);
+    setCursos(cursosFiltrados);
+  };
+  getCursos();
+}, []);
 
   const addCurso = async (curso) => {
     handleCursoModal();
@@ -50,23 +53,35 @@ const ViewCadastroCurso = () => {
 
   const deletarCurso = async (idCursos) => {
     handleConfirmModal(0);
-    if (await api.delete(`Curso/${idCursos}`)) {
-      const cursosFiltrados = cursos.filter((curso) => curso.idCursos !== idCursos);
-      setCursos(cursosFiltrados);
+  
+    try {
+      const response = await api.delete(`Curso/${idCursos}`);
+      if (response.status === 200) {
+        // Remove o curso da lista local se a exclusão for bem-sucedida
+        setCursos(cursos.filter((curso) => curso.idCursos !== idCursos));
+      }
+    } catch (error) {
+      // Captura e exibe a mensagem de erro
+      const errorMessage =
+        error.response?.data?.message || "Erro ao excluir o curso. Ele está vinculado a outras informações.";
+      setErrorMessage(errorMessage);
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
     }
   };
+  
 
   const pegarCurso = (idCursos) => {
-    const curso = cursos.filter((curso) => curso.idCursos === idCursos);
-    setCurso(curso[0]);
+    const cursoSelecionado = cursos.find((curso) => curso.idCursos === idCursos);
+    setCurso(cursoSelecionado);
     handleCursoModal();
   };
 
   const atualizarCurso = async (curso) => {
     handleCursoModal();
     const response = await api.put(`Curso/${curso.idCursos}`, curso);
-    const { idCursos } = response.data;
-    setCursos(cursos.map((item) => (item.idCursos === idCursos ? response.data : item)));
+    setCursos(cursos.map((item) => (item.idCursos === curso.idCursos ? response.data : item)));
     setCurso({ idCursos: 0 });
   };
 
@@ -75,17 +90,9 @@ const ViewCadastroCurso = () => {
     handleCursoModal();
   };
 
-  const [filtros, setFiltros] = useState({
-    idCursos: '',
-    nome: '',
-    nivel: '',
-    tipo: '',
-  });
-
   const filtrarCursos = () => {
     const cursosFiltrados = cursos.filter((curso) => {
       return (
-        (filtros.idCursos === '' || curso.idCursos.toString().includes(filtros.idCursos)) &&
         (filtros.nome === '' || curso.nome.toLowerCase().includes(filtros.nome.toLowerCase())) &&
         (filtros.nivel === '' || curso.nivel.toLowerCase() === filtros.nivel.toLowerCase()) &&
         (filtros.tipo === '' || curso.tipo.toLowerCase() === filtros.tipo.toLowerCase())
@@ -99,22 +106,17 @@ const ViewCadastroCurso = () => {
     const todosCursos = await pegaTodosCursos();
     setCursos(todosCursos);
   };
-
+  const novoCurso = () => {
+    setCurso({ idCursos: 0 }); // Limpa o curso selecionado
+    handleCursoModal(); // Abre o modal de curso
+  };
+  
   return (
     <div className="container">
       <h4 className="p-5">Gestão de Cursos</h4>
       {/* Filtros */}
       <div className="row mb-3">
-        <div className="col-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="ID"
-            value={filtros.id}
-            onChange={(e) => setFiltros({ ...filtros, idCursos: e.target.value })}
-          />
-        </div>
-        <div className="col-3">
+        <div className="col-4">
           <input
             type="text"
             className="form-control"
@@ -148,7 +150,7 @@ const ViewCadastroCurso = () => {
             <option value="Misto">Misto</option>
           </select>
         </div>
-        <div className="col-2">
+        <div className="col-3">
           <button className="btn btn-primary me-2" onClick={filtrarCursos}>
             Pesquisar
           </button>
@@ -160,15 +162,19 @@ const ViewCadastroCurso = () => {
           </button>
         </div>
       </div>
-
+      {errorMessage && (
+          <div className="alert alert-danger mt-3">
+            {errorMessage}
+          </div>
+        )}
       {/* Lista de Cursos */}
       <CursoLista
         cursos={cursos}
         pegarCurso={pegarCurso}
-        deletarCurso={deletarCurso}
+        handleConfirmModal={handleConfirmModal}
       />
 
-      {/* Modal de Formulário */}
+      {/* Modal de Formulário*/}
       <Modal show={showCursoModal} onHide={handleCursoModal}>
         <Modal.Header closeButton>
           <Modal.Title>Registro de Curso</Modal.Title>
@@ -184,7 +190,7 @@ const ViewCadastroCurso = () => {
       </Modal>
 
       {/* Modal de Exclusão */}
-      <Modal size="sm" show={smShowConfirmModal} onHide={handleConfirmModal}>
+      <Modal size="sm" show={smShowConfirmModal} onHide={() => handleConfirmModal(0)}>
         <Modal.Header closeButton>
           <Modal.Title>Excluindo Curso</Modal.Title>
         </Modal.Header>
@@ -201,6 +207,9 @@ const ViewCadastroCurso = () => {
           </button>
         </Modal.Footer>
       </Modal>
+
+
+      
     </div>
   );
 };

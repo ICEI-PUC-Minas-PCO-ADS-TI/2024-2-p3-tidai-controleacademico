@@ -9,63 +9,85 @@ const usuarioInicial = {
     endereco: '',
     tipo: '',
     senha: '',
-    idCurso: '',
+    idCurso: 0,
     idCursoNavigation: null,
 };
 
 export default function UsuarioForm(props) {
+    const calcularProximaMatricula = () => {
+        if (props.usuarios && props.usuarios.length > 0) {
+            const maiorMatricula = Math.max(...props.usuarios.map((u) => u.matricula));
+            return maiorMatricula + 1;
+        }
+        return 1;
+    };
+
     const usuarioAtual = () => {
-        if (props.usuarioSelecionado.matricula !== 0) {
+        if (props.usuarioSelecionado && props.usuarioSelecionado.matricula !== 0) {
             return props.usuarioSelecionado;
         } else {
-            return usuarioInicial;
+            return {
+                ...usuarioInicial,
+                matricula: calcularProximaMatricula(),
+            };
         }
     };
 
     const [usuario, setUsuario] = useState(usuarioAtual());
 
     useEffect(() => {
-        if (props.usuarioSelecionado.matricula !== 0) setUsuario(props.usuarioSelecionado);
-    }, [props.usuarioSelecionado]);
+        if (props.usuarioSelecionado && props.usuarioSelecionado.matricula !== 0) {
+            setUsuario(props.usuarioSelecionado);
+        } else {
+            setUsuario({
+                ...usuarioInicial,
+                matricula: calcularProximaMatricula(),
+            });
+        }
+    }, [props.usuarioSelecionado, props.usuarios]);
 
     const inputTextHandler = (e) => {
         const { name, value } = e.target;
-
         setUsuario({ ...usuario, [name]: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Validação de todos os campos obrigatórios
         if (
             !usuario.nome.trim() ||
             !usuario.cpf.trim() ||
             usuario.tipo === '' ||
             !usuario.email.trim() ||
             !usuario.endereco.trim() ||
-            !usuario.senha.trim() ||
-            !usuario.idCurso
+            !usuario.senha.trim()
         ) {
             alert('Por favor, preencha todos os campos obrigatórios.');
             return;
         }
 
-        // Verifique se está atualizando ou adicionando
-        if (props.usuarioSelecionado.matricula !== 0) {
-            props.atualizarUsuario(usuario);
+        const usuarioParaEnvio = { ...usuario, idCurso: 0 };
+
+        if (props.usuarioSelecionado && props.usuarioSelecionado.matricula !== 0) {
+            props.atualizarUsuario(usuarioParaEnvio);
         } else {
-            props.addUsuario(usuario);
+            props.addUsuario(usuarioParaEnvio);
         }
 
-        setUsuario(usuarioInicial);
+        setUsuario({
+            ...usuarioInicial,
+            matricula: calcularProximaMatricula(),
+        });
+        window.location.reload();
     };
 
     const handleCancelar = (e) => {
         e.preventDefault();
-
         props.cancelarUsuario();
-        setUsuario(usuarioInicial);
+        setUsuario({
+            ...usuarioInicial,
+            matricula: calcularProximaMatricula(),
+        });
     };
 
     return (
@@ -113,13 +135,13 @@ export default function UsuarioForm(props) {
                         className="form-select"
                         name="tipo"
                         onChange={inputTextHandler}
-                        value={usuario.tipo}
+                        value={usuario.tipo || ''} // Puxa o valor do estado corretamente
                         required
                     >
                         <option value="">Selecione</option>
-                        <option value="0">Aluno</option>
-                        <option value="1">Professor</option>
-                        <option value="2">Secretário</option>
+                        <option value="Aluno">Aluno</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Secretário">Secretário</option>
                     </select>
                 </div>
 
@@ -169,26 +191,6 @@ export default function UsuarioForm(props) {
                         value={usuario.senha}
                         required
                     />
-                </div>
-
-                {/* Curso */}
-                <div className="col-12 bg-light">
-                    <label htmlFor="inputState" className="form-label">
-                        Curso <span style={{ color: 'red' }}>*</span>
-                    </label>
-                    <select
-                        id="curso"
-                        className="form-select"
-                        name="idCurso"
-                        onChange={inputTextHandler}
-                        value={usuario.idCurso}
-                        required
-                    >
-                        <option value="">Selecione</option>
-                        <option value="1">SI</option>
-                        <option value="2">ADS</option>
-                        <option value="3">Direito</option>
-                    </select>
                 </div>
 
                 {/* Botões */}

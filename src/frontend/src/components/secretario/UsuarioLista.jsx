@@ -1,49 +1,59 @@
 import React from 'react';
 
 export default function UsuarioLista(props) {
-  function TipoLabel(param) {
-    switch (param) {
-      case '1': return 'Aluno';
-      case '2': return 'Professor';
-      case '3': return 'Secretário';
-      default:  return 'Indefinido';
+    function TipoLabel(param) {
+        switch (param) {
+            case '1': return 'Aluno';
+            case '2': return 'Professor';
+            case '3': return 'Secretário';
+            default: return 'Indefinido';
+        }
     }
-  }
 
-  return (
-    <>
-      {props.usuarios.map((usuario) => (
-        <tr>
-          <td>{usuario.matricula}</td>
-          <td>{usuario.nome}</td>
-          <td>{usuario.cpf}</td>
-          <td>{usuario.email}</td>
-          <td>{usuario.endereco}</td>
-          <td>{usuario.tipo}</td>
-          <td>{usuario.idCurso}</td>
-          <td>
-            <button
-              type="button"
-              className="btn btn-outline-primary"
-              onClick={() => {
-                props.pegarUsuario(usuario.matricula); // Chama pegarUsuario
-                }}
-            >
-              <i className="fa-regular fa-pen-to-square"></i>
-            </button>
-          </td>
+    return (
+        <>
+            {props.usuarios.map((usuario) => (
+                <tr>
+                    <td>{usuario.matricula}</td>
+                    <td>{usuario.nome}</td>
+                    <td>{usuario.cpf}</td>
+                    <td>{usuario.email}</td>
+                    <td>{usuario.endereco}</td>
+                    <td>{usuario.tipo}</td>
+                    <td>
+                        <button
+                            type="button"
+                            className="btn btn-outline-info"
+                            onClick={() => {
+                                props.handleDisciplinaModal(usuario.matricula); // Chama pegarUsuario
+                            }}
+                        >
+                            Disciplinas
+                        </button>
+                    </td>
+                    <td>
+                        <button
+                            type="button"
+                            className="btn btn-outline-primary"
+                            onClick={() => {
+                                props.pegarUsuario(usuario.matricula); // Chama pegarUsuario
+                            }}
+                        >
+                            <i className="fa-regular fa-pen-to-square"></i>
+                        </button>
+                    </td>
 
-          <td>
-            <button
-              type="button"
-              className="btn btn-outline-danger"
-              onClick={() => props.handleConfirmModal(usuario.matricula)}
-            >
-              <i className="fa-regular fa-trash-can"></i>
-            </button>
-          </td>
-        </tr>
-      ))}
-    </>
-  );
+                    <td>
+                        <button
+                            type="button"
+                            className="btn btn-outline-danger"
+                            onClick={() => props.handleConfirmModal(usuario.matricula)}
+                        >
+                            <i className="fa-regular fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            ))}
+        </>
+    );
 }
