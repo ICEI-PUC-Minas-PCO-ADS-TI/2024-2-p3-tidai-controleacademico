@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import '../../styles/menuUsuarios.css';
 
-export default function MenuAluno() {
+export default function Menu() {
     return (
         <div>
             {/* Navbar principal */}
@@ -12,7 +12,7 @@ export default function MenuAluno() {
                         {/* Link para a página inicial do Secretário */}
                         <Link to="index" className="nav_logo">
                             <i className="bx bx-layer nav_logo-icon"></i>
-                            <span className="nav_logo-name">Aluno</span>
+                            <span className="nav_logo-name">Professor</span>
                         </Link>
 
                         {/* Navigation Links */}
@@ -24,6 +24,10 @@ export default function MenuAluno() {
                             <Link to="atividade" className="nav_link">
                             <i class='bx bx-book nav_icon'></i>
                             <span className="nav_name">Atividades</span>
+                            </Link>
+                            <Link to="chamada" className="nav_link">
+                            <i class='bx bx-edit nav_icon'></i>
+                            <span className="nav_name">Controle de Presença</span>
                             </Link>
                             <Link to="relatorios" className="nav_link">
                             <i class='bx bx-bar-chart-alt nav_icon'></i>

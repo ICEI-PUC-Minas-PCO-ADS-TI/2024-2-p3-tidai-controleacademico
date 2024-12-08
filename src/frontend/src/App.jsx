@@ -9,19 +9,13 @@ import ViewInicial from './views/secretario';
 import ViewCadastroUser from './views/secretario/CadastroUsuario';
 import ViewCadastroCurso from './views/secretario/CadastroCurso';
 import ViewRelatorio from './views/secretario/Relatorio';  
-import MenuProfessor from './views/Professor/Menu';
-import IndexProf from './views/Professor';
-import ControleProf from './views/Professor/Painel';
-import AtividadeProf from './views/Professor/Atividades';
-import ChamadaProf from './views/Professor/Chamada';
-import RelatorioProf from './views/Professor/Relatorio';
-import MenuAluno from './views/Aluno/Menu';
-import IndexAluno from './views/Aluno';
-import ControleAluno from './views/Aluno/Painel';
-import AtividadeAluno from './views/Aluno/Atividades';
-import RelatorioAluno from './views/Aluno/Relatorio';
-import AulaProf from './views/Professor/Aula';
-import DisciplinaProf from './views/Professor/Disciplina';
+import Menu from './views/Professor-Aluno/Menu';
+import Index from './views/Professor-Aluno';
+import Controle from './views/Professor-Aluno/Painel';
+import Atividade from './views/Professor-Aluno/Atividades';
+import Chamada from './views/Professor-Aluno/Chamada';
+import Relatorio from './views/Professor-Aluno/Relatorio';
+import Disciplina from './views/Professor-Aluno/Disciplina';
 
 
 export default function App() {
@@ -32,28 +26,15 @@ export default function App() {
       <Route path="/" element={<ViewIndex />} />
       <Route path="/login" element={<ViewLogin />} />
 
-      {/* Rotas do Aluno */}
-        <Route path="/aluno" element={<MenuAluno />}>
+      {/* Rotas do Professor e Aluno */}
+      <Route path="/professor" element={<Menu />}>
         <Route index element={<Navigate to="index" replace />} />
-        <Route path="index" element={<IndexAluno />} />
-        <Route path="painel" element={<ControleAluno />} />
-        <Route path="atividade" element={<AtividadeAluno />} />
-        <Route path="relatorios" element={<RelatorioAluno />} />
-        <Route path="logout" element={<ViewInicial />} />
-      </Route>
-
-      {/* Rotas do Professor */}
-      <Route path="/professor" element={<MenuProfessor />}>
-        <Route index element={<Navigate to="index" replace />} />
-        <Route path="index" element={<IndexProf />} />
-        <Route path="painel" element={<ControleProf />} />
-
-        <Route path="disciplina" element={<DisciplinaProf />} />
-        <Route path="aula" element={<AulaProf />} />
-
-        <Route path="atividade" element={<AtividadeProf />} />
-        <Route path="chamada" element={<ChamadaProf />} />
-        <Route path="relatorios" element={<RelatorioProf />} />
+        <Route path="index" element={<Index />} />
+        <Route path="painel" element={<Controle />} />
+        <Route path="disciplina" element={<Disciplina />} />
+        <Route path="atividade" element={<Atividade />} />
+        <Route path="chamada" element={<Chamada />} />
+        <Route path="relatorios" element={<Relatorio />} />
         <Route path="logout" element={<ViewInicial />} />
       </Route>
 

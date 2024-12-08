@@ -20,10 +20,10 @@ const CursoLista = (props) => {
             <td>{curso.nivel}</td>
             <td>{curso.tipo}</td>
             <td>
-              <button
+            <button
                 type="button"
                 className="btn btn-outline-success"
-                onClick={() => props.pegarCurso(curso.idCursos)}
+                onClick={() => props.abrirModalDisciplinas(curso.idCursos)} // Passa o idCurso
               >
                 Disciplinas
               </button>

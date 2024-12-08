@@ -23,10 +23,11 @@ export default function UsuarioLista(props) {
                     <td>
                         <button
                             type="button"
-                            className="btn btn-outline-info"
+                            className={`btn ${usuario.tipo === 'Secretário' ? 'btn btn-outline-secondary' : 'btn-outline-info'}`}
                             onClick={() => {
                                 props.handleDisciplinaModal(usuario.matricula); // Chama pegarUsuario
                             }}
+                            disabled={usuario.tipo === 'Secretário'} // Desabilita o botão se o tipo for 'Secretario'
                         >
                             Disciplinas
                         </button>

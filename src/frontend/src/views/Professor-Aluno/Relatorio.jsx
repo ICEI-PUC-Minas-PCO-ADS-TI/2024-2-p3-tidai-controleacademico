@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import '../../styles/menuUsuarios.css';
 
-export default function RelatorioProf() {
+export default function Relatorio() {
     return (
         <>
             <div class="height-100">
