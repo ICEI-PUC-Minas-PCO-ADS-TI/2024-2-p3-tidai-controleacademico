@@ -26,12 +26,14 @@ export default function App() {
       <Route path="/" element={<ViewIndex />} />
       <Route path="/login" element={<ViewLogin />} />
 
-      {/* Rotas do Professor e Aluno */}
-      <Route path="/professor" element={<Menu />}>
+      {/* Rotas do Professor */}
+      <Route path="/usuario" element={<Menu />}>
         <Route index element={<Navigate to="index" replace />} />
         <Route path="index" element={<Index />} />
         <Route path="painel" element={<Controle />} />
+
         <Route path="disciplina" element={<Disciplina />} />
+
         <Route path="atividade" element={<Atividade />} />
         <Route path="chamada" element={<Chamada />} />
         <Route path="relatorios" element={<Relatorio />} />

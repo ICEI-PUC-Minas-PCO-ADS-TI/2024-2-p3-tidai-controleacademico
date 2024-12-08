@@ -54,7 +54,7 @@ export default function PainelControle() {
                 {disciplinas.map((disciplina) => (
                     <div key={disciplina.idDisciplinas} className="col-md-3 mb-5 cardgeral">
                         <div className="card" style={{ width: '100%', height: '300px' }}>
-                            <Link to="/professor/disciplina" state={{ disciplinaId: disciplina.idDisciplinas }} style={{ height: '300px' }}>
+                            <Link to="/usuario/disciplina" state={{ disciplinaId: disciplina.idDisciplinas }} style={{ height: '300px' }}>
                                 <div
                                     style={{
                                         backgroundColor: 'blue',
