@@ -47,9 +47,25 @@ export default function Atividade() {
     }, []);
 
     // Funções para abrir e fechar o modal
-    const handleShowModal = () => setShowModal(true);
+// Função para abrir o modal e resetar o estado de novaTarefa
+const handleShowModal = () => {
+    setNovaTarefa({
+        idTarefa: null,
+        titulo: '',
+        modulo: '',
+        valor: 0,
+        dataEntrega: '',
+        linkArquivoTarefa: '',
+        idDisciplinas: 1, // Definindo sempre como 1
+        idDisciplinasNavigation: null,
+        entregarTarefas: []
+    });
+    setShowModal(true);
+};
     const handleCloseModal = () => setShowModal(false);
-
+    useEffect(() => {
+        console.log('Atividades atualizadas:', atividades);
+    }, [atividades]);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNovaTarefa({
@@ -67,40 +83,59 @@ export default function Atividade() {
 
     // Função para salvar a nova tarefa (POST ou PUT)
     const handleSaveTarefa = () => {
-        const formData = new FormData();
-        formData.append('titulo', novaTarefa.titulo);
-        formData.append('modulo', novaTarefa.modulo);
-        formData.append('valor', novaTarefa.valor);
-        formData.append('dataEntrega', novaTarefa.dataEntrega);
-        formData.append('idDisciplinas', novaTarefa.idDisciplinas);
-        formData.append('idDisciplinasNavigation', novaTarefa.idDisciplinasNavigation);
-        formData.append('linkArquivoTarefa', novaTarefa.linkArquivoTarefa);
-
+        // Criar o objeto a ser enviado no formato esperado pela API
+        const payload = {
+            idTarefa: novaTarefa.idTarefa || 0,
+            modulo: novaTarefa.modulo,
+            titulo: novaTarefa.titulo,
+            valor: novaTarefa.valor,
+            dataEntrega: novaTarefa.dataEntrega,
+            linkArquivoTarefa: novaTarefa.linkArquivoTarefa,
+            idDisciplinas: 1, // Definindo sempre o idDisciplinas como 1
+            idDisciplinasNavigation: novaTarefa.idDisciplinasNavigation,
+            EntregarTarefas: novaTarefa.entregarTarefas || [],
+        };
+    
+        // Verificar se é uma nova tarefa ou uma edição
         if (novaTarefa.idTarefa) {
             // Atualizando uma tarefa existente (PUT)
-            axios.put(`https://localhost:7198/api/TarefaDisciplina/${novaTarefa.idTarefa}`, formData)
+            axios
+                .put(`https://localhost:7198/api/TarefaDisciplina/${novaTarefa.idTarefa}`, payload, {
+                    headers: { 'Content-Type': 'application/json' },
+                })
                 .then(response => {
+                    // Atualizar a lista de tarefas
                     setAtividades(atividades.map(atividade =>
                         atividade.idTarefa === novaTarefa.idTarefa ? response.data : atividade
                     ));
                     handleCloseModal();
                 })
-                .catch(err => console.error('Erro ao atualizar a tarefa:', err));
+                .catch(err => {
+                    console.error('Erro ao atualizar a tarefa:', err.response || err.message);
+                });
         } else {
             // Criando uma nova tarefa (POST)
-            axios.post('https://localhost:7198/api/TarefaDisciplina', formData)
+            axios
+                .post('https://localhost:7198/api/TarefaDisciplina', payload, {
+                    headers: { 'Content-Type': 'application/json' },
+                })
                 .then(response => {
+                    // Adicionar a nova tarefa à lista
                     setAtividades([...atividades, response.data]);
                     handleCloseModal();
                 })
-                .catch(err => console.error('Erro ao salvar a tarefa:', err));
+                .catch(err => {
+                    console.error('Erro ao salvar a tarefa:', err.response || err.message);
+                });
         }
     };
+    
+
+    
 
     const handleEditTarefa = (atividade) => {
         setNovaTarefa({
             ...atividade,
-            linkArquivoTarefa: null, // Resetando o arquivo ao editar
         });
         setShowModal(true);
     };
@@ -259,7 +294,7 @@ export default function Atividade() {
                                 value={novaTarefa.linkArquivoTarefa}
                                 onChange={handleInputChange}
                                 rows="3"
-                                placeholder="Descrição da tarefa"
+                                placeholder="Link da tarefa"
                             />
                         </div>
                     </form>
