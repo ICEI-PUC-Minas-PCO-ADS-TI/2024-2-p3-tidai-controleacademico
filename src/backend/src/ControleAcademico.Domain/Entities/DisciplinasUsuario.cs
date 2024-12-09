@@ -9,4 +9,5 @@ public partial class DisciplinasUsuario
 
     public virtual Disciplina? IdDisciplinasNavigation { get; set; } = null!;
     public virtual Usuario? MatriculaNavigation { get; set; } = null!;
+    public virtual ICollection<Presenca> Presencas { get; set; }
 }

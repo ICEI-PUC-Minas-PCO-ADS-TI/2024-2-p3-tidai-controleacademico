@@ -139,7 +139,7 @@ public partial class ControleAcademicoContext : DbContext
             entity.Property(e => e.IdTarefa).HasColumnName("id_tarefa");
             entity.Property(e => e.Matricula).HasColumnName("matricula");
             entity.Property(e => e.DataEntrega).HasColumnName("data_entrega");
-            entity.Property(e => e.Arquivo).HasMaxLength(1000).HasColumnName("arquivo");
+            entity.Property(e => e.Arquivo).HasMaxLength(1000).HasColumnName("texto_entrega");
             entity.Property(e => e.Nota).HasColumnName("nota").HasColumnType("decimal(5,2)").IsRequired(false);
             entity.HasOne(d => d.IdTarefaNavigation)
                 .WithMany(p => p.EntregarTarefas)

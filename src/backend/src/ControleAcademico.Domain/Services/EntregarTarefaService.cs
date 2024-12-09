@@ -68,11 +68,11 @@ namespace ControleAcademico.Domain.Services
             }
         }
 
-        public async Task<EntregarTarefa[]> PegarEntregaPorTudo(int IdEntregarTarefa, int IdTarefa, int Matricula, DateTime DataEntrega, string Arquivo, int Nota)
+        public async Task<EntregarTarefa[]> PegarEntregaPorTudo(int? IdEntrega=null, int? IdTarefa=null, int? Matricula=null, DateTime? DataEntrega=null, string? Arquivo=null, int? Nota=null)
         {
             try
             {
-                var entregas = await _entregaRepo.PegarMaterialPorTudoAsync(IdEntregarTarefa, IdTarefa, Matricula, DataEntrega, Arquivo, Nota);
+                var entregas = await _entregaRepo.PegarMaterialPorTudoAsync(IdEntrega, IdTarefa, Matricula, DataEntrega, Arquivo, Nota);
                 if (entregas == null || !entregas.Any())
                     return null;
 

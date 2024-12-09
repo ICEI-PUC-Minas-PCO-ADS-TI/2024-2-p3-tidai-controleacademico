@@ -205,25 +205,25 @@ export default function Atividade() {
                                                         <i className="fa-regular fa-trash-can"></i>
                                                     </button>
                                                     {nomeUsuario === 'Professor' && (
-                                                        <Link to="/usuario/avaliacao">
+                                                        <Link to="/usuario/avaliacao" state={{ idTarefa: atividade.idTarefa }}>
                                                             <button className="btn btn-success ms-2">
                                                                 Avaliar Entregas
                                                             </button>
-                                                        </Link>                                                
+                                                        </Link>
                                                     )}
-                                                        </div>
-                                                    )}
-                                                    {nomeUsuario === 'Aluno' && (
-                                                        <div>
-                                                            <button className="btn btn-success ms-2" onClick={() => handleEditTarefa(atividade)}>
-                                                                Entregar Tarefa
-                                                            </button>
-                                                        </div>
-                                                    )}
+                                                </div>
+                                            )}
+                                            {nomeUsuario === 'Aluno' && (
+                                                <div>
+                                                    <button className="btn btn-success ms-2" onClick={() => handleEditTarefa(atividade)}>
+                                                        Entregar Tarefa
+                                                    </button>
+                                                </div>
+                                            )}
 
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>

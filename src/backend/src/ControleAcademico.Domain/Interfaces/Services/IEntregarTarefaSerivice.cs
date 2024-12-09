@@ -9,6 +9,6 @@ namespace ControleAcademico.Domain.Interfaces.Services
         Task<EntregarTarefa> AtualizarEntrega(EntregarTarefa model);
         Task<bool> DeletarEntrega(int idEntrega);
         Task<EntregarTarefa[]> PegarTodosEntregaAsynk(); // Método para pegar todas as entregas
-        Task<EntregarTarefa[]> PegarEntregaPorTudo(int IdEntregarTarefa, int IdTarefa, int Matricula, DateTime DataEntrega, string Arquivo,int Nota); // Método para pegar entregas com filtros
+        Task<EntregarTarefa[]> PegarEntregaPorTudo(int? IdEntrega=null, int? IdTarefa=null, int? Matricula=null, DateTime? DataEntrega=null, string? Arquivo=null, int? Nota=null); // Método para pegar entregas com filtros
     }
 }

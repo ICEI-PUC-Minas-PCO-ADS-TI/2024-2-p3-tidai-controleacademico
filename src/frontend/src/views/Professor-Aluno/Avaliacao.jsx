@@ -4,26 +4,34 @@ import { Modal, Button } from 'react-bootstrap';
 import '../../styles/menuUsuarios.css';
 
 export default function Avaliacao() {
+    const [nomeUsuario, setNomeUsuario] = useState('');
+    useEffect(() => {
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (usuario) {
+            setNomeUsuario(usuario.matricula);
+        }
+    }, []);
+
+
     const [entregas, setEntregas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [novaEntrega, setNovaEntrega] = useState({
         idEntrega: 0,
-        idTarefa: 0,
-        matricula: 0,
-        dataEntrega: '',
+        idTarefa: 0, //Pegue o id passado pelo state
+        matricula: 0, // Pegue do nomeUsuario
+        dataEntrega: '', //Data q o aluno enviar o form
         arquivo: '',
         nota: 0,
         idTarefaNavigation: null,
         matriculaNavigation: null
     });
-    
+
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [entregaParaExcluir, setEntregaParaExcluir] = useState(null);
 
     useEffect(() => {
-        // Substitua a URL pela URL do seu backend
         axios.get('https://localhost:7198/api/EntregarTarefa')
             .then(response => {
                 setEntregas(response.data);
@@ -74,10 +82,9 @@ export default function Avaliacao() {
         const payload = { ...novaEntrega };
 
         if (novaEntrega.idEntrega) {
-            // Editar entrega
             axios.put(`https://localhost:7198/api/EntregarTarefa/${novaEntrega.idEntrega}`, payload)
                 .then(response => {
-                    setEntregas(entregas.map(entrega => 
+                    setEntregas(entregas.map(entrega =>
                         entrega.idEntrega === novaEntrega.idEntrega ? response.data : entrega
                     ));
                     handleCloseModal();
@@ -86,7 +93,6 @@ export default function Avaliacao() {
                     console.error('Erro ao atualizar a entrega:', err);
                 });
         } else {
-            // Criar nova entrega
             axios.post('https://localhost:7198/api/EntregarTarefa', payload)
                 .then(response => {
                     setEntregas([...entregas, response.data]);
@@ -120,14 +126,7 @@ export default function Avaliacao() {
     if (error) return <p>Erro: {error}</p>;
 
     return (
-        <div className="container">
-            <h1 className="titulo mb-5">Painel de Atividade Entregues</h1>
-            
-            <div>
-                <button className="m-4 btn btn-success" onClick={() => handleShowModal()}>
-                    Adicionar Entrega
-                </button>
-            </div>
+        <>
 
             <div>
                 <ul className="list-group">
@@ -244,6 +243,6 @@ export default function Avaliacao() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </>
     );
 }

@@ -17,7 +17,7 @@ namespace ControleAcademico.Data.Repositories
             return await _context.EntregarTarefas.AsNoTracking().ToArrayAsync();
         }
         // Método para pegar entregas de tarefa com filtros
-        public async Task<EntregarTarefa[]> PegarMaterialPorTudoAsync(int IdEntrega, int IdTarefa, int Matricula,  DateTime DataEntrega, string Arquivo,int Nota)
+        public async Task<EntregarTarefa[]> PegarMaterialPorTudoAsync(int? IdEntrega=null, int? IdTarefa=null, int?Matricula=null,  DateTime? DataEntrega=null, string? Arquivo=null, int? Nota=null)
         {
             IQueryable<EntregarTarefa> query = _context.EntregarTarefas.AsNoTracking();
             // Aplicando filtros dinamicamente

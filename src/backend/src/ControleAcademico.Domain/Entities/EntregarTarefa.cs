@@ -9,8 +9,8 @@ public class EntregarTarefa
     public int? Matricula { get; set; }
 
     public DateTime? DataEntrega { get; set; }
-    public string Arquivo { get; set; }
-        public int? Nota { get; set; }
+    public string? Arquivo { get; set; }
+    public int? Nota { get; set; }
 
     public virtual TarefasDisciplina? IdTarefaNavigation { get; set; }
     public virtual Usuario? MatriculaNavigation { get; set; }
