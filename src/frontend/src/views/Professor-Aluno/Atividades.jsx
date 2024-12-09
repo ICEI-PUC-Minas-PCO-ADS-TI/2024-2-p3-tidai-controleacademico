@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';  // Importar useLocation para acessar o state
+import { Link, useLocation } from 'react-router-dom';  // Importar useLocation para acessar o state
 import '../../styles/menuUsuarios.css';
 
 export default function Atividade() {
@@ -99,26 +99,26 @@ export default function Atividade() {
             axios.put(`https://localhost:7198/api/TarefaDisciplina/${novaTarefa.idTarefa}`, payload, {
                 headers: { 'Content-Type': 'application/json' },
             })
-            .then(response => {
-                setAtividades(atividades.map(atividade =>
-                    atividade.idTarefa === novaTarefa.idTarefa ? response.data : atividade
-                ));
-                handleCloseModal();
-            })
-            .catch(err => {
-                console.error('Erro ao atualizar a tarefa:', err.response || err.message);
-            });
+                .then(response => {
+                    setAtividades(atividades.map(atividade =>
+                        atividade.idTarefa === novaTarefa.idTarefa ? response.data : atividade
+                    ));
+                    handleCloseModal();
+                })
+                .catch(err => {
+                    console.error('Erro ao atualizar a tarefa:', err.response || err.message);
+                });
         } else {
             axios.post('https://localhost:7198/api/TarefaDisciplina', payload, {
                 headers: { 'Content-Type': 'application/json' },
             })
-            .then(response => {
-                setAtividades([...atividades, response.data]);
-                handleCloseModal();
-            })
-            .catch(err => {
-                console.error('Erro ao salvar a tarefa:', err.response || err.message);
-            });
+                .then(response => {
+                    setAtividades([...atividades, response.data]);
+                    handleCloseModal();
+                })
+                .catch(err => {
+                    console.error('Erro ao salvar a tarefa:', err.response || err.message);
+                });
         }
     };
 
@@ -204,18 +204,26 @@ export default function Atividade() {
                                                     <button className="btn btn-danger ms-2" onClick={() => handleShowDeleteModal(atividade)}>
                                                         <i className="fa-regular fa-trash-can"></i>
                                                     </button>
-                                                </div>
-                                            )}
-                                            {nomeUsuario === 'Aluno' && (
-                                                <div>
-                                                    <button className="btn btn-success ms-2" onClick={() => handleEditTarefa(atividade)}>
-                                                        Entregar Tarefa
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
+                                                    {nomeUsuario === 'Professor' && (
+                                                        <Link to="/usuario/avaliacao">
+                                                            <button className="btn btn-success ms-2">
+                                                                Avaliar Entregas
+                                                            </button>
+                                                        </Link>                                                
+                                                    )}
+                                                        </div>
+                                                    )}
+                                                    {nomeUsuario === 'Aluno' && (
+                                                        <div>
+                                                            <button className="btn btn-success ms-2" onClick={() => handleEditTarefa(atividade)}>
+                                                                Entregar Tarefa
+                                                            </button>
+                                                        </div>
+                                                    )}
+
+                                                </li>
+                                            ))}
+                                        </ul>
                             </div>
                         </div>
                     </div>
