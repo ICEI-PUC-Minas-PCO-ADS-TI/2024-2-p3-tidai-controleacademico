@@ -13,6 +13,7 @@ import Menu from './views/Professor-Aluno/Menu';
 import Index from './views/Professor-Aluno';
 import Controle from './views/Professor-Aluno/Painel';
 import Atividade from './views/Professor-Aluno/Atividades';
+import Avaliacao from './views/Professor-Aluno/Avaliacao';
 import Chamada from './views/Professor-Aluno/Chamada';
 import Relatorio from './views/Professor-Aluno/Relatorio';
 import Disciplina from './views/Professor-Aluno/Disciplina';
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="disciplina" element={<Disciplina />} />
 
         <Route path="atividade" element={<Atividade />} />
+        <Route path="avaliacao" element={<Avaliacao />} />
         <Route path="chamada" element={<Chamada />} />
         <Route path="relatorios" element={<Relatorio />} />
         <Route path="logout" element={<ViewInicial />} />

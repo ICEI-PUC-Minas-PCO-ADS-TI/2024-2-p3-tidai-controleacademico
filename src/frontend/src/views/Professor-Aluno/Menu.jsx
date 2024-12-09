@@ -38,10 +38,17 @@ export default function Menu() {
 
                             {/* Renderizar o link de Controle de Presença somente se o usuário for Professor */}
                             {nomeUsuario === 'Professor' && (
-                                <Link to="chamada" className="nav_link">
-                                    <i className='bx bx-edit nav_icon'></i>
-                                    <span className="nav_name">Controle de Presença</span>
-                                </Link>
+                                <>
+                                    <Link to="avaliacao" className="nav_link">
+                                        <i className='bx bx-edit nav_icon'></i>
+                                        <span className="nav_name">Avaliar Atividades</span>
+                                    </Link>
+                                    <Link to="chamada" className="nav_link">
+                                        <i className='bx bx-edit nav_icon'></i>
+                                        <span className="nav_name">Controle de Presença</span>
+                                    </Link>
+                                </>
+
                             )}
 
                             <Link to="relatorios" className="nav_link">

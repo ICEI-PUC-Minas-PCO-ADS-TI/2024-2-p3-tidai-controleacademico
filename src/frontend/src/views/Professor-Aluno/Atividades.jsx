@@ -7,7 +7,15 @@ export default function Atividade() {
     const [atividades, setAtividades] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [nomeUsuario, setNomeUsuario] = useState('');
 
+    // Quando o componente for montado, pega o nome do usuário do localStorage
+    useEffect(() => {
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (usuario) {
+            setNomeUsuario(usuario.tipo);  // Armazena o tipo do usuário no estado
+        }
+    }, []);  // O useEffect será chamado apenas uma vez, quando o componente for montado
     // Estado para controlar a visibilidade do modal
     const [showModal, setShowModal] = useState(false);
     const [novaTarefa, setNovaTarefa] = useState({
@@ -121,12 +129,15 @@ export default function Atividade() {
 
     return (
         <div className="container">
-            <h1 className="titulo mb-5">Painel de Controle</h1>
-            <div>
-                <button className="m-4 btn btn-success" onClick={handleShowModal}>
-                    Adicionar Tarefa
-                </button>
-            </div>
+            <h1 className="titulo mb-5">Painel de Atividades</h1>
+            {nomeUsuario === 'Professor' && (
+                <div>
+                    <button className="m-4 btn btn-success" onClick={handleShowModal}>
+                        Adicionar Tarefa
+                    </button>
+                </div>
+            )}
+
 
             {/* Accordion das atividades agrupadas por módulo */}
             <div className="accordion mb-5" id="accordionExample">
@@ -150,15 +161,27 @@ export default function Atividade() {
                                 <ul className="list-group">
                                     {modulo.itens.map(atividade => (
                                         <li key={atividade.idTarefa} className="list-group-item d-flex justify-content-between align-items-center">
-                                            <a href={atividade.linkArquivoTarefa}><p>Disponível até {atividade.dataEntrega} | {atividade.valor} pts</p></a>
-                                            <div>
-                                                <button className="btn btn-primary ms-2" onClick={() => handleEditTarefa(atividade)}>
-                                                    <i className="fa-regular fa-pen-to-square"></i>
-                                                </button>
-                                                <button className="btn btn-danger ms-2" onClick={() => handleDeleteTarefa(atividade.idTarefa)}>
-                                                    <i className="fa-regular fa-trash-can"></i>
-                                                </button>
-                                            </div>
+                                            <a target="_blank" href={atividade.linkArquivoTarefa}>
+                                                <p>Disponível até {atividade.dataEntrega} | {atividade.valor} pts</p>
+                                            </a>
+                                            {nomeUsuario === 'Professor' && (
+                                                <div>
+                                                    <button className="btn btn-primary ms-2" onClick={() => handleEditTarefa(atividade)}>
+                                                        <i className="fa-regular fa-pen-to-square"></i>
+                                                    </button>
+                                                    <button className="btn btn-danger ms-2" onClick={() => handleDeleteTarefa(atividade.idTarefa)}>
+                                                        <i className="fa-regular fa-trash-can"></i>
+                                                    </button>
+                                                </div>
+                                            )}
+                                            {nomeUsuario === 'Aluno' && (
+                                                <div>
+                                                    <button className="btn btn-success ms-2" onClick={() => handleEditTarefa(atividade)}>
+                                                        Entregar Tarefa
+                                                    </button>
+                                                </div>
+                                            )}
+
                                         </li>
                                     ))}
                                 </ul>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../../styles/menuUsuarios.css';
 
-export default function IndexProf() {
+export default function Index() {
 
     const [nomeUsuario, setNomeUsuario] = useState('');
 

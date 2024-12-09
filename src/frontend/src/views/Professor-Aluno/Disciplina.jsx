@@ -25,7 +25,15 @@ export default function Disciplinas() {
     });
     const [conteudoEditar, setConteudoEditar] = useState(null);
     const [conteudoExcluir, setConteudoExcluir] = useState(null);
+    const [nomeUsuario, setNomeUsuario] = useState('');
 
+    // Quando o componente for montado, pega o nome do usuário do localStorage
+    useEffect(() => {
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (usuario) {
+            setNomeUsuario(usuario.tipo);  // Armazena o tipo do usuário no estado
+        }
+    }, []);  // O useEffect será chamado apenas uma vez, quando o componente for montado
     useEffect(() => {
         const fetchDisciplina = async () => {
             try {
@@ -65,24 +73,24 @@ export default function Disciplinas() {
             img: novoConteudo.img || '', // Campo opcional
             idDisciplinasNavigation: null, // Se necessário
         };
-    
+
         // Remova o idMateria ao criar um novo conteúdo
         if (!conteudoEditar) {
             delete conteudoParaSalvar.idMateria;
         }
-    
+
         console.log('Dados enviados para salvar:', conteudoParaSalvar);
-    
+
         if (conteudoEditar) {
-        // Requisição PUT para editar (não usando o ID na URL, mandando no corpo)
-        axios.put('https://localhost:7198/api/MaterialDisciplina', conteudoParaSalvar) // Removido o ID da URL
-            .then(response => {
-                console.log('Resposta do PUT:', response.data);
-                setConteudos(conteudos.map(item =>
-                    item.idMateria === conteudoEditar.idMateria ? response.data : item
-                ));
-                limparModal();
-            })
+            // Requisição PUT para editar (não usando o ID na URL, mandando no corpo)
+            axios.put('https://localhost:7198/api/MaterialDisciplina', conteudoParaSalvar) // Removido o ID da URL
+                .then(response => {
+                    console.log('Resposta do PUT:', response.data);
+                    setConteudos(conteudos.map(item =>
+                        item.idMateria === conteudoEditar.idMateria ? response.data : item
+                    ));
+                    limparModal();
+                })
 
         } else {
             // Requisição POST para criar
@@ -94,7 +102,7 @@ export default function Disciplinas() {
                 })
         }
     };
-    
+
     const limparModal = () => {
         setNovoConteudo({
             idMateria: null, // Sempre inicialize como null
@@ -109,7 +117,7 @@ export default function Disciplinas() {
         setShowModal(false);
         setConteudoEditar(null);
     };
-    
+
 
     // Função para deletar conteúdo
     const deletarConteudo = () => {
@@ -133,7 +141,7 @@ export default function Disciplinas() {
         });
         setShowModal(true); // Exibe o modal
     };
-    
+
 
     const confirmarExclusao = (conteudo) => {
         setConteudoExcluir(conteudo);
@@ -144,11 +152,14 @@ export default function Disciplinas() {
         <>
             <div className="container">
                 <h1 className="titulo mb-5">Material da disciplina</h1>
-                <div>
-                    <button className='m-4 btn btn-success' onClick={() => setShowModal(true)}>
-                        Incluir Material Disciplina
-                    </button>
-                </div>
+                {nomeUsuario === 'Professor' && (
+                    <div>
+                        <button className='m-4 btn btn-success' onClick={() => setShowModal(true)}>
+                            Incluir Material Disciplina
+                        </button>
+                    </div>
+                )}
+
                 <div className="accordion mb-5" id="accordionExample">
                     {/* Agrupando os conteúdos por módulo */}
                     {conteudos.reduce((acc, conteudo) => {
@@ -175,21 +186,24 @@ export default function Disciplinas() {
                                         {modulo.itens.map((conteudo) => (
                                             <li key={conteudo.idMateria} className="list-group-item">
                                                 <div className="d-flex justify-content-between align-items-center">
-                                                    <button className="btn btn-link text-start" type="button" data-bs-toggle="collapse" data-bs-target={`#collapseItem${conteudo.idMateria}`}>
+                                                    <button className="btn btn-link text-start" type="button" data-bs-toggle="collapse" data-bs-target={`#collapseItem${conteudo.idMateria}`} aria-expanded="false" aria-controls={`collapseItem${conteudo.idMateria}`}>
                                                         {conteudo.titulo}
                                                     </button>
 
-                                                    {/* Botões de Editar e Excluir dentro de cada item */}
-                                                    <div>
-                                                        <button className="ms-2" onClick={() => editarConteudo(conteudo)}>
-                                                            <i className="fa-regular fa-pen-to-square"></i>
-                                                        </button>
-                                                        <button className="ms-2" onClick={() => confirmarExclusao(conteudo)}>
-                                                            <i className="fa-regular fa-trash-can"></i>
-                                                        </button>
-                                                    </div>
+                                                    {/* Botões de Editar e Excluir (somente para 'Professor') */}
+                                                    {nomeUsuario === 'Professor' && (
+                                                        <div>
+                                                            <button className="ms-2" onClick={() => editarConteudo(conteudo)}>
+                                                                <i className="fa-regular fa-pen-to-square"></i>
+                                                            </button>
+                                                            <button className="ms-2" onClick={() => confirmarExclusao(conteudo)}>
+                                                                <i className="fa-regular fa-trash-can"></i>
+                                                            </button>
+                                                        </div>
+                                                    )}
                                                 </div>
 
+                                                {/* Exibição do conteúdo (inicialmente fechado) */}
                                                 <div id={`collapseItem${conteudo.idMateria}`} className="collapse">
                                                     <div className="d-flex justify-content-center">
                                                         <iframe width="560" height="315" src={conteudo.linkVideoaula} frameBorder="0" allowFullScreen></iframe>
@@ -200,6 +214,8 @@ export default function Disciplinas() {
                                                 </div>
                                             </li>
                                         ))}
+
+
                                     </ul>
                                 </div>
                             </div>
