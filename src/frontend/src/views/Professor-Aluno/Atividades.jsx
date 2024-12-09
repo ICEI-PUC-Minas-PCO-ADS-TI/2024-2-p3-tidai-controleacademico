@@ -40,7 +40,7 @@ export default function Atividade() {
         const fetchAtividades = async () => {
             try {
                 const response = await axios.get(`https://localhost:7198/api/TarefaDisciplina?idDisciplina=${disciplinaId}`);
-                setAtividades(response.data);
+                setAtividades(response.data);  // Aqui as atividades já são filtradas pela disciplina
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -145,7 +145,11 @@ export default function Atividade() {
         }
     };
 
-    const atividadesPorModulo = atividades.reduce((acc, atividade) => {
+    // Filtrando as atividades para garantir que estamos exibindo apenas as da disciplina correta
+    const atividadesFiltradas = atividades.filter(atividade => atividade.idDisciplinas === disciplinaId);
+
+    // Agrupando as atividades por módulo
+    const atividadesPorModulo = atividadesFiltradas.reduce((acc, atividade) => {
         const moduloExistente = acc.find(item => item.modulo === atividade.modulo);
         if (moduloExistente) {
             moduloExistente.itens.push(atividade);
