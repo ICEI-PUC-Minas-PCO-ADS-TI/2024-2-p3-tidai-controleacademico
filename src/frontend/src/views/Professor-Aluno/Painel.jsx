@@ -54,20 +54,35 @@ export default function PainelControle() {
                 {disciplinas.map((disciplina) => (
                     <div key={disciplina.idDisciplinas} className="col-md-3 mb-5 cardgeral">
                         <div className="card" style={{ width: '100%', height: '300px' }}>
-                            <Link to="/usuario/disciplina" state={{ disciplinaId: disciplina.idDisciplinas }} style={{ height: '300px' }}>
-                                <div
-                                    style={{
-                                        backgroundColor: 'blue',
-                                        height: '150px',
-                                        opacity: '90%',
-                                    }}
-                                ></div>
+                        <div className="card" style={{ height: '300px' }}>
+    <div
+        style={{
+            backgroundColor: 'blue',
+            height: '150px',
+            opacity: '90%',
+        }}
+    ></div>
 
-                                <div className="card-body d-flex flex-column justify-content-between text-center">
-                                    <h5 className="card-title">{disciplina.nome}</h5>
-                                    <p className="card-text">{disciplina.semestre}° Semestre</p>
-                                </div>
-                            </Link>
+    <div className="card-body d-flex flex-column justify-content-between text-center">
+        <h5 className="card-title">{disciplina.nome}</h5>
+        <p className="card-text">{disciplina.semestre}° Semestre</p>
+    </div>
+
+    <div className="d-flex justify-content-center gap-3 mb-3">
+        <Link to="/usuario/disciplina" state={{ disciplinaId: disciplina.idDisciplinas }}>
+            <button className="btn btn-primary">
+                Material
+            </button>
+        </Link>
+        <Link to="/usuario/atividade" state={{ disciplinaId: disciplina.idDisciplinas }}>
+            <button className="btn btn-primary">
+                Tarefas
+            </button>
+        </Link>
+    </div>
+</div>
+
+
                         </div>
                     </div>
                 ))}

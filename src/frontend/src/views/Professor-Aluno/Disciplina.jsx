@@ -151,7 +151,7 @@ export default function Disciplinas() {
     return (
         <>
             <div className="container">
-                <h1 className="titulo mb-5">Material da disciplina</h1>
+                <h1 className="titulo mt-10">Material da disciplina</h1>
                 {nomeUsuario === 'Professor' && (
                     <div>
                         <button className='m-4 btn btn-success' onClick={() => setShowModal(true)}>
@@ -193,10 +193,10 @@ export default function Disciplinas() {
                                                     {/* Botões de Editar e Excluir (somente para 'Professor') */}
                                                     {nomeUsuario === 'Professor' && (
                                                         <div>
-                                                            <button className="ms-2" onClick={() => editarConteudo(conteudo)}>
+                                                            <button className="btn btn-primary ms-" onClick={() => editarConteudo(conteudo)}>
                                                                 <i className="fa-regular fa-pen-to-square"></i>
                                                             </button>
-                                                            <button className="ms-2" onClick={() => confirmarExclusao(conteudo)}>
+                                                            <button className="btn btn-danger ms-2" onClick={() => confirmarExclusao(conteudo)}>
                                                                 <i className="fa-regular fa-trash-can"></i>
                                                             </button>
                                                         </div>

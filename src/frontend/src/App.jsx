@@ -34,8 +34,8 @@ export default function App() {
         <Route path="painel" element={<Controle />} />
 
         <Route path="disciplina" element={<Disciplina />} />
-
         <Route path="atividade" element={<Atividade />} />
+        
         <Route path="avaliacao" element={<Avaliacao />} />
         <Route path="chamada" element={<Chamada />} />
         <Route path="relatorios" element={<Relatorio />} />

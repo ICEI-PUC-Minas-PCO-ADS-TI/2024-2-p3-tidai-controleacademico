@@ -31,10 +31,6 @@ export default function Menu() {
                                 <i className='bx bx-group nav_icon'></i>
                                 <span className="nav_name">Painel de Controle</span>
                             </Link>
-                            <Link to="atividade" className="nav_link">
-                                <i className='bx bx-book nav_icon'></i>
-                                <span className="nav_name">Atividades</span>
-                            </Link>
 
                             {/* Renderizar o link de Controle de Presença somente se o usuário for Professor */}
                             {nomeUsuario === 'Professor' && (

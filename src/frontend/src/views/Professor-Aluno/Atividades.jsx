@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';  // Importar useLocation para acessar o state
 import '../../styles/menuUsuarios.css';
 
 export default function Atividade() {
@@ -9,14 +10,16 @@ export default function Atividade() {
     const [error, setError] = useState(null);
     const [nomeUsuario, setNomeUsuario] = useState('');
 
-    // Quando o componente for montado, pega o nome do usuário do localStorage
+    const location = useLocation();  // Obter o estado da localização (Link)
+    const disciplinaId = location.state?.disciplinaId || 1;  // Pegar o idDisciplinas passado no Link ou 1 se não tiver
+
     useEffect(() => {
         const usuario = JSON.parse(localStorage.getItem('usuario'));
         if (usuario) {
-            setNomeUsuario(usuario.tipo);  // Armazena o tipo do usuário no estado
+            setNomeUsuario(usuario.tipo);
         }
-    }, []);  // O useEffect será chamado apenas uma vez, quando o componente for montado
-    // Estado para controlar a visibilidade do modal
+    }, []);
+
     const [showModal, setShowModal] = useState(false);
     const [novaTarefa, setNovaTarefa] = useState({
         idTarefa: null,
@@ -25,16 +28,18 @@ export default function Atividade() {
         valor: 0,
         dataEntrega: '',
         linkArquivoTarefa: '',
-        idDisciplinas: 0,
+        idDisciplinas: disciplinaId, // Usando o idDisciplinas da URL
         idDisciplinasNavigation: null,
         entregarTarefas: []
     });
 
-    // Função para buscar as atividades da API
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [tarefaParaExcluir, setTarefaParaExcluir] = useState(null);
+
     useEffect(() => {
         const fetchAtividades = async () => {
             try {
-                const response = await axios.get('https://localhost:7198/api/TarefaDisciplina');
+                const response = await axios.get(`https://localhost:7198/api/TarefaDisciplina?idDisciplina=${disciplinaId}`);
                 setAtividades(response.data);
                 setLoading(false);
             } catch (err) {
@@ -42,30 +47,26 @@ export default function Atividade() {
                 setLoading(false);
             }
         };
-
         fetchAtividades();
-    }, []);
+    }, [disciplinaId]);
 
-    // Funções para abrir e fechar o modal
-// Função para abrir o modal e resetar o estado de novaTarefa
-const handleShowModal = () => {
-    setNovaTarefa({
-        idTarefa: null,
-        titulo: '',
-        modulo: '',
-        valor: 0,
-        dataEntrega: '',
-        linkArquivoTarefa: '',
-        idDisciplinas: 1, // Definindo sempre como 1
-        idDisciplinasNavigation: null,
-        entregarTarefas: []
-    });
-    setShowModal(true);
-};
+    const handleShowModal = () => {
+        setNovaTarefa({
+            idTarefa: null,
+            titulo: '',
+            modulo: '',
+            valor: 0,
+            dataEntrega: '',
+            linkArquivoTarefa: '',
+            idDisciplinas: disciplinaId, // Usando o idDisciplinas da URL
+            idDisciplinasNavigation: null,
+            entregarTarefas: []
+        });
+        setShowModal(true);
+    };
+
     const handleCloseModal = () => setShowModal(false);
-    useEffect(() => {
-        console.log('Atividades atualizadas:', atividades);
-    }, [atividades]);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNovaTarefa({
@@ -81,9 +82,7 @@ const handleShowModal = () => {
         });
     };
 
-    // Função para salvar a nova tarefa (POST ou PUT)
     const handleSaveTarefa = () => {
-        // Criar o objeto a ser enviado no formato esperado pela API
         const payload = {
             idTarefa: novaTarefa.idTarefa || 0,
             modulo: novaTarefa.modulo,
@@ -91,47 +90,37 @@ const handleShowModal = () => {
             valor: novaTarefa.valor,
             dataEntrega: novaTarefa.dataEntrega,
             linkArquivoTarefa: novaTarefa.linkArquivoTarefa,
-            idDisciplinas: 1, // Definindo sempre o idDisciplinas como 1
+            idDisciplinas: disciplinaId, // Usando o idDisciplinas da URL
             idDisciplinasNavigation: novaTarefa.idDisciplinasNavigation,
             EntregarTarefas: novaTarefa.entregarTarefas || [],
         };
-    
-        // Verificar se é uma nova tarefa ou uma edição
+
         if (novaTarefa.idTarefa) {
-            // Atualizando uma tarefa existente (PUT)
-            axios
-                .put(`https://localhost:7198/api/TarefaDisciplina/${novaTarefa.idTarefa}`, payload, {
-                    headers: { 'Content-Type': 'application/json' },
-                })
-                .then(response => {
-                    // Atualizar a lista de tarefas
-                    setAtividades(atividades.map(atividade =>
-                        atividade.idTarefa === novaTarefa.idTarefa ? response.data : atividade
-                    ));
-                    handleCloseModal();
-                })
-                .catch(err => {
-                    console.error('Erro ao atualizar a tarefa:', err.response || err.message);
-                });
+            axios.put(`https://localhost:7198/api/TarefaDisciplina/${novaTarefa.idTarefa}`, payload, {
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => {
+                setAtividades(atividades.map(atividade =>
+                    atividade.idTarefa === novaTarefa.idTarefa ? response.data : atividade
+                ));
+                handleCloseModal();
+            })
+            .catch(err => {
+                console.error('Erro ao atualizar a tarefa:', err.response || err.message);
+            });
         } else {
-            // Criando uma nova tarefa (POST)
-            axios
-                .post('https://localhost:7198/api/TarefaDisciplina', payload, {
-                    headers: { 'Content-Type': 'application/json' },
-                })
-                .then(response => {
-                    // Adicionar a nova tarefa à lista
-                    setAtividades([...atividades, response.data]);
-                    handleCloseModal();
-                })
-                .catch(err => {
-                    console.error('Erro ao salvar a tarefa:', err.response || err.message);
-                });
+            axios.post('https://localhost:7198/api/TarefaDisciplina', payload, {
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => {
+                setAtividades([...atividades, response.data]);
+                handleCloseModal();
+            })
+            .catch(err => {
+                console.error('Erro ao salvar a tarefa:', err.response || err.message);
+            });
         }
     };
-    
-
-    
 
     const handleEditTarefa = (atividade) => {
         setNovaTarefa({
@@ -140,15 +129,22 @@ const handleShowModal = () => {
         setShowModal(true);
     };
 
-    const handleDeleteTarefa = (idTarefa) => {
-        axios.delete(`https://localhost:7198/api/TarefaDisciplina/${idTarefa}`)
-            .then(() => {
-                setAtividades(atividades.filter(atividade => atividade.idTarefa !== idTarefa));
-            })
-            .catch(err => console.error('Erro ao excluir a tarefa:', err));
+    const handleShowDeleteModal = (atividade) => {
+        setTarefaParaExcluir(atividade);
+        setShowDeleteModal(true);
     };
 
-    // Agrupar as atividades por módulo
+    const handleDeleteTarefa = () => {
+        if (tarefaParaExcluir) {
+            axios.delete(`https://localhost:7198/api/TarefaDisciplina/${tarefaParaExcluir.idTarefa}`)
+                .then(() => {
+                    setAtividades(atividades.filter(atividade => atividade.idTarefa !== tarefaParaExcluir.idTarefa));
+                    setShowDeleteModal(false);
+                })
+                .catch(err => console.error('Erro ao excluir a tarefa:', err));
+        }
+    };
+
     const atividadesPorModulo = atividades.reduce((acc, atividade) => {
         const moduloExistente = acc.find(item => item.modulo === atividade.modulo);
         if (moduloExistente) {
@@ -173,8 +169,6 @@ const handleShowModal = () => {
                 </div>
             )}
 
-
-            {/* Accordion das atividades agrupadas por módulo */}
             <div className="accordion mb-5" id="accordionExample">
                 {atividadesPorModulo.map((modulo, index) => (
                     <div key={index} className="accordion-item">
@@ -189,7 +183,6 @@ const handleShowModal = () => {
                             >
                                 {`Módulo ${modulo.modulo}`}
                             </button>
-
                         </h2>
                         <div id={`collapse${modulo.modulo.replace(' ', '-')}`} className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div className="accordion-body">
@@ -204,7 +197,7 @@ const handleShowModal = () => {
                                                     <button className="btn btn-primary ms-2" onClick={() => handleEditTarefa(atividade)}>
                                                         <i className="fa-regular fa-pen-to-square"></i>
                                                     </button>
-                                                    <button className="btn btn-danger ms-2" onClick={() => handleDeleteTarefa(atividade.idTarefa)}>
+                                                    <button className="btn btn-danger ms-2" onClick={() => handleShowDeleteModal(atividade)}>
                                                         <i className="fa-regular fa-trash-can"></i>
                                                     </button>
                                                 </div>
@@ -216,7 +209,6 @@ const handleShowModal = () => {
                                                     </button>
                                                 </div>
                                             )}
-
                                         </li>
                                     ))}
                                 </ul>
@@ -305,6 +297,24 @@ const handleShowModal = () => {
                     </Button>
                     <Button variant="primary" onClick={handleSaveTarefa}>
                         {novaTarefa.idTarefa ? 'Atualizar Tarefa' : 'Salvar Tarefa'}
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal de confirmação de exclusão */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmar Exclusão</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Você tem certeza que deseja excluir esta tarefa?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Cancelar
+                    </Button>
+                    <Button variant="danger" onClick={handleDeleteTarefa}>
+                        Excluir
                     </Button>
                 </Modal.Footer>
             </Modal>
