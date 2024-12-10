@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 
 const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
@@ -9,8 +9,13 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
     idCurso,
   });
 
-  const [disciplinasListadas, setDisciplinasListadas] = useState(disciplinas);
-  const [showForm, setShowForm] = useState(false); // Estado para controlar visibilidade do formulário
+  const [disciplinasListadas, setDisciplinasListadas] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  // Sincroniza disciplinasListadas com disciplinas (props)
+  useEffect(() => {
+    setDisciplinasListadas(disciplinas);
+  }, [disciplinas]);
 
   const inputTextHandler = (e) => {
     const { name, value } = e.target;
@@ -27,35 +32,44 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
 
     // Verifique se está adicionando ou editando a disciplina
     if (disciplina.idDisciplinas === 0) {
-      setDisciplinasListadas([...disciplinasListadas, disciplina]); // Corrigido aqui
+      const novoId = disciplinasListadas.length
+        ? Math.max(...disciplinasListadas.map((d) => d.idDisciplinas)) + 1
+        : 1;
+      const novaDisciplina = { ...disciplina, idDisciplinas: novoId };
+      setDisciplinasListadas([...disciplinasListadas, novaDisciplina]);
     } else {
       setDisciplinasListadas(
         disciplinasListadas.map((d) =>
           d.idDisciplinas === disciplina.idDisciplinas ? disciplina : d
         )
-      ); // Corrigido aqui
+      );
     }
 
-    // Limpar campos e esconder formulário
-    setDisciplina({ idDisciplinas: 0, nome: '', semestre: '', idCurso });
-    setShowForm(false);
+    resetForm();
   };
 
   const handleEdit = (id) => {
     const disciplinaParaEditar = disciplinasListadas.find((d) => d.idDisciplinas === id);
-    setDisciplina(disciplinaParaEditar);
-    setShowForm(true); // Mostrar formulário ao editar
+    if (disciplinaParaEditar) {
+      // Atualiza o estado e exibe o formulário após a atualização
+      setDisciplina(disciplinaParaEditar);
+      setShowForm(true);
+    }
   };
 
   const handleNovoClick = () => {
-    setDisciplina({ idDisciplinas: 0, nome: '', semestre: '', idCurso }); // Resetar formulário
-    setShowForm(true); // Mostrar formulário
+    resetForm();
+    setShowForm(true);
+  };
+
+  const resetForm = () => {
+    setDisciplina({ idDisciplinas: 0, nome: '', semestre: '', idCurso });
+    setShowForm(false);
   };
 
   return (
     <>
-      <h5>Disciplinas do Curso</h5>
-      <table className="table table-striped">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Disciplina</th>
@@ -72,23 +86,28 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
               <td>
                 <button
                   onClick={() => handleEdit(d.idDisciplinas)}
-                  className="btn btn-link"
+                  className="btn btn-outline-primary"
                 >
                   <i className="fa-regular fa-pen-to-square"></i>
                 </button>
               </td>
               <td>
+                <button className='btn btn-outline-danger'>
                 <i className="fa-regular fa-trash-can"></i>
+
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
 
-      <button onClick={handleNovoClick}>Novo</button>
+      <Button onClick={handleNovoClick} variant="primary" className="mt-3">
+        Novo
+      </Button>
 
       {showForm && (
-        <div className="bg-primary-subtle p-4 rounded-3 shadow-sm">
+        <div className="bg-primary-subtle p-4 rounded-3 shadow-sm mt-3">
           <h6>Adicionar / Editar Disciplina</h6>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
