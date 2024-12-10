@@ -20,7 +20,7 @@ public partial class ControleAcademicoContext : DbContext
     public virtual DbSet<EntregarTarefa> EntregarTarefas { get; set; } // Tabela nova
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("server=localhost;database=controle_academico;user=root;password=123456", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.36-mysql"));
+        => optionsBuilder.UseMySql("server=localhost;database=controleacademicologin;user=root;password=2470", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.36-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

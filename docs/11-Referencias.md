@@ -1,19 +1,25 @@
 # Referências
 
-Inclua todas as referências (livros, artigos, sites, etc.) utilizadas no desenvolvimento do trabalho.
+ISO/IEC 25010:2011. Sistemas e Engenharia de Software — Modelos de Qualidade de Sistemas e Software.
 
-Exemplo:
+Norma internacional que define características de qualidade de software, como usabilidade, eficiência, confiabilidade e segurança.
+Somerville, I. Software Engineering. 10th Edition. Pearson.
 
-- BENYON, David. **Interação humano-computador**. 2. ed. São Paulo: Pearson Prentice Hall, 2011.
+Obra clássica que explora metodologias, processos de desenvolvimento e princípios de qualidade no desenvolvimento de software.
+Neil Patel. Teste de Usabilidade: O que é e como fazer passo a passo.
 
-- CORMEN, Thomas H et al. **Algoritmos:** teoria e prática. 4. ed. Rio de Janeiro: GEN LTC, 2024.
- 
-- ELMASRI, Ramez; NAVATHE, Sham. **Sistemas de banco de dados**. 7. ed. São Paulo: Pearson, c2019.
+Artigo disponível online que oferece uma introdução prática e detalhada sobre como planejar e executar testes de usabilidade de forma eficiente.
+Cursos e Recursos Online
+Curso Full Stack do Professor Vinícius de Andrade (Udemy).
 
-- RUSSELL, Stuart J.; NORVIG, Peter. **Inteligência artificial:** uma abordagem moderna. 4. ed. Rio de Janeiro, RJ: LTC, 2022.
+Um curso prático que aborda tecnologias como React, Node.js, MongoDB e outras ferramentas essenciais para desenvolvimento de aplicações modernas.
+Documentação Oficial do React.
 
-- SUTHERLAND, Jeffrey Victor; SUTHERLAND, J. J. **Scrum:** a arte de fazer o dobro do trabalho na metade do tempo. Rio de Janeiro, RJ: Sextante, 2019. 254 p.
+Disponível em https://react.dev/. Este recurso é essencial para compreender os fundamentos do framework e aplicá-los no desenvolvimento de interfaces dinâmicas.
+Documentação do MySQL.
 
-> **Links úteis**:
-> - [Padrão PUC Minas de normalização ABNT](http://portal.pucminas.br/biblioteca/documentos/GUIA-COMPLETO-ABNT-Elaborar-formatar-trabalho-cientificoNOVO.pdf)
-> - [Formato ABNT](https://www.normastecnicas.com/abnt/)
+Disponível em https://dev.mysql.com/doc/. Essencial para o desenvolvimento e otimização de bancos de dados relacionais.
+OpenAI. ChatGPT: Assistente de Desenvolvimento de Software.
+
+Ferramenta de inteligência artificial que pode ser utilizada como apoio em projetos acadêmicos e profissionais. Referência acadêmica:
+OpenAI. ChatGPT: Assisting in Software Development Projects. Disponível em: https://openai.com.

@@ -22,3 +22,15 @@ C:\Users\pedro\OneDrive\Documentos\Front\2024-2-p3-tidai-controleacademico\src\b
 C:\Users\pedro\OneDrive\Documentos\Front\2024-2-p3-tidai-controleacademico\src\backend\src\ControleAcademico.Domain\bin\Debug\net6.0\ControleAcademico.Domain.dll
 C:\Users\pedro\OneDrive\Documentos\Front\2024-2-p3-tidai-controleacademico\src\backend\src\ControleAcademico.Domain\bin\Debug\net6.0\ControleAcademico.Domain.pdb
 C:\Users\pedro\OneDrive\Documentos\Front\2024-2-p3-tidai-controleacademico\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ref\ControleAcademico.Domain.dll
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\bin\Debug\net6.0\ControleAcademico.Domain.deps.json
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\bin\Debug\net6.0\ControleAcademico.Domain.dll
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\bin\Debug\net6.0\ControleAcademico.Domain.pdb
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.csproj.AssemblyReference.cache
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.AssemblyInfoInputs.cache
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.AssemblyInfo.cs
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.csproj.CoreCompileInputs.cache
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.dll
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\refint\ControleAcademico.Domain.dll
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ControleAcademico.Domain.pdb
+C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\obj\Debug\net6.0\ref\ControleAcademico.Domain.dll
