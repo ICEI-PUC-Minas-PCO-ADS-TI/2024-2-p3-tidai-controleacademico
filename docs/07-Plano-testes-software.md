@@ -56,7 +56,7 @@
 |:---: |:---: |
 | Requisito associado | RF-006 - O sistema deve permitir que o professor monte um calendário com as datas de aulas, provas e eventos acadêmicos. |
 | Objetivo do teste | Verificar se o professor consegue definir um calendário na aplicação. |
-| Passos | :---: |
+| Passos | - |
 | Critério de êxito | - Montagem de calendário realizada com sucesso. |
 | Responsável pela elaboração do caso de teste | Arthur Henrique |
 
@@ -86,7 +86,7 @@
 |:---: |:---: |
 | Requisito associado | RF-009 - O sistema deve permitir que alunos vejam o calendário com as datas de aulas, provas e eventos acadêmicos. |
 | Objetivo do teste | Verificar se os alunos conseguem visualizar calendários com eventos agendados na aplicação. |
-| Passos | :---: |
+| Passos | - |
 | Critério de êxito | - O calendário foi visualizado com sucesso. |
 | Responsável pela elaboração do caso de teste | Arthur Henrique |
 
@@ -106,7 +106,7 @@
 |:---: |:---: |
 | Requisito associado | RF-011 -  O sistema deve enviar notificações aos usuários sobre eventos, como provas e alterações nas aulas. |
 | Objetivo do teste | Verificar se o sistema notifica os usuários sobre eventos na aplicação. |
-| Passos | :---: |
+| Passos | - |
 | Critério de êxito | - O sistema notificou os usuários com sucesso. |
 | Responsável pela elaboração do caso de teste | Arthur Henrique |
 
