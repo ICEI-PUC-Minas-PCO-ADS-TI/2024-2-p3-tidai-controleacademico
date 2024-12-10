@@ -2,9 +2,35 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import '../../styles/menuUsuarios.css';
+import { useLocation } from 'react-router-dom'; // Para pegar o idTarefa da navegação
 
 export default function Avaliacao() {
+    //-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    //-----------------------------------------------------------------------------------------------------------------------
     const [nomeUsuario, setNomeUsuario] = useState('');
+    const { state } = useLocation(); // Pegando o idTarefa passado via state
+    const idTarefa = state?.idTarefa; // idTarefa passado por state
+
     useEffect(() => {
         const usuario = JSON.parse(localStorage.getItem('usuario'));
         if (usuario) {
@@ -12,15 +38,14 @@ export default function Avaliacao() {
         }
     }, []);
 
-
     const [entregas, setEntregas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [novaEntrega, setNovaEntrega] = useState({
         idEntrega: 0,
-        idTarefa: 0, //Pegue o id passado pelo state
-        matricula: 0, // Pegue do nomeUsuario
-        dataEntrega: '', //Data q o aluno enviar o form
+        idTarefa: idTarefa || 0, // Usando idTarefa do state
+        matricula: nomeUsuario || 0, // Usando matricula do usuário
+        dataEntrega: '', // Data q o aluno enviar o form
         arquivo: '',
         nota: 0,
         idTarefaNavigation: null,
@@ -32,16 +57,18 @@ export default function Avaliacao() {
     const [entregaParaExcluir, setEntregaParaExcluir] = useState(null);
 
     useEffect(() => {
-        axios.get('https://localhost:7198/api/EntregarTarefa')
-            .then(response => {
-                setEntregas(response.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, []);
+        if (idTarefa) {
+            axios.get(`https://localhost:7198/api/EntregarTarefa`)
+                .then(response => {
+                    setEntregas(response.data);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    setError(err.message);
+                    setLoading(false);
+                });
+        }
+    }, [idTarefa]);
 
     const handleShowModal = (entrega = null) => {
         if (entrega) {
@@ -49,8 +76,8 @@ export default function Avaliacao() {
         } else {
             setNovaEntrega({
                 idEntrega: 0,
-                idTarefa: 0,
-                matricula: 0,
+                idTarefa: idTarefa || 0,
+                matricula: nomeUsuario || 0,
                 dataEntrega: '',
                 arquivo: '',
                 nota: 0,
@@ -71,10 +98,11 @@ export default function Avaliacao() {
         });
     };
 
-    const handleFileChange = (e) => {
+    // Novo handleTextChange para lidar com o valor da área de texto
+    const handleTextChange = (e) => {
         setNovaEntrega({
             ...novaEntrega,
-            arquivo: e.target.files[0].name,
+            arquivo: e.target.value, // Salvando o texto digitado na área de texto
         });
     };
 
@@ -104,43 +132,18 @@ export default function Avaliacao() {
         }
     };
 
-    const handleShowDeleteModal = (entrega) => {
-        setEntregaParaExcluir(entrega);
-        setShowDeleteModal(true);
-    };
-
-    const handleDeleteEntrega = () => {
-        if (entregaParaExcluir) {
-            axios.delete(`https://localhost:7198/api/EntregarTarefa/${entregaParaExcluir.idEntrega}`)
-                .then(() => {
-                    setEntregas(entregas.filter(entrega => entrega.idEntrega !== entregaParaExcluir.idEntrega));
-                    setShowDeleteModal(false);
-                })
-                .catch(err => {
-                    console.error('Erro ao excluir a entrega:', err);
-                });
-        }
-    };
-
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>Erro: {error}</p>;
 
     return (
         <>
-
-            <div>
+            <div className="container">
+                {/* Lista as entregas filtradas pela idTarefa */}
                 <ul className="list-group">
-                    {entregas.map(entrega => (
+                    {entregas.filter(entrega => entrega.idTarefa === idTarefa).map(entrega => (
                         <li key={entrega.idEntrega} className="list-group-item d-flex justify-content-between align-items-center">
-                            <p>{`Tarefa: ${entrega.idTarefa}, Matrícula: ${entrega.matricula}, Data de entrega: ${entrega.dataEntrega}`}</p>
-                            <div>
-                                <button className="btn btn-primary ms-2" onClick={() => handleShowModal(entrega)}>
-                                    <i className="fa-regular fa-pen-to-square"></i> Editar
-                                </button>
-                                <button className="btn btn-danger ms-2" onClick={() => handleShowDeleteModal(entrega)}>
-                                    <i className="fa-regular fa-trash-can"></i> Excluir
-                                </button>
-                            </div>
+                            <p>{`Matrícula: ${entrega.matricula}`}</p>
+                            <Button onClick={() => handleShowModal(entrega)}>Avaliar</Button>
                         </li>
                     ))}
                 </ul>
@@ -153,52 +156,16 @@ export default function Avaliacao() {
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
-                        <div className="col-6">
-                            <label htmlFor="tarefaInput" className="form-label">ID Tarefa</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="tarefaInput"
-                                name="idTarefa"
-                                value={novaEntrega.idTarefa}
-                                onChange={handleInputChange}
-                                placeholder="ID da Tarefa"
-                            />
-                        </div>
-
-                        <div className="col-6">
-                            <label htmlFor="matriculaInput" className="form-label">Matrícula</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="matriculaInput"
-                                name="matricula"
-                                value={novaEntrega.matricula}
-                                onChange={handleInputChange}
-                                placeholder="Matrícula"
-                            />
-                        </div>
-
-                        <div className="col-6">
-                            <label htmlFor="dataEntregaInput" className="form-label">Data de Entrega</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="dataEntregaInput"
-                                name="dataEntrega"
-                                value={novaEntrega.dataEntrega}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-
-                        <div className="col-6">
-                            <label htmlFor="arquivoInput" className="form-label">Arquivo</label>
-                            <input
-                                type="file"
+                        <div className="col-12">
+                            <label htmlFor="arquivoInput" className="form-label">Resposta</label>
+                            <textarea
                                 className="form-control"
                                 id="arquivoInput"
                                 name="arquivo"
-                                onChange={handleFileChange}
+                                rows="6" // Definindo a quantidade de linhas visíveis da área de texto
+                                onChange={handleTextChange} // Usando a função para tratar o texto
+                                placeholder="Digite sua resposta aqui..."
+                                value={novaEntrega.arquivo} // Garantindo que o valor da área de texto é controlado
                             />
                         </div>
 
@@ -222,24 +189,6 @@ export default function Avaliacao() {
                     </Button>
                     <Button variant="primary" onClick={handleSaveEntrega}>
                         {novaEntrega.idEntrega ? 'Atualizar Entrega' : 'Salvar Entrega'}
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-            {/* Modal de confirmação de exclusão */}
-            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirmar Exclusão</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Você tem certeza que deseja excluir esta entrega?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                        Cancelar
-                    </Button>
-                    <Button variant="danger" onClick={handleDeleteEntrega}>
-                        Excluir
                     </Button>
                 </Modal.Footer>
             </Modal>
