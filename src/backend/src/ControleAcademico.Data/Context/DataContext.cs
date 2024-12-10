@@ -21,7 +21,7 @@ public partial class ControleAcademicoContext : DbContext
     public virtual DbSet<EntregarTarefa> EntregarTarefas { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("server=localhost;database=controle_academico;user=root;password=123456", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.36-mysql"));
+        => optionsBuilder.UseMySql("Server=tcp:appcontroleserver.database.windows.net,1433;Initial Catalog=controleAcademico;Persist Security Info=False;User ID=controleacademicoroot;Password={Controleacademico123};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.36-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
