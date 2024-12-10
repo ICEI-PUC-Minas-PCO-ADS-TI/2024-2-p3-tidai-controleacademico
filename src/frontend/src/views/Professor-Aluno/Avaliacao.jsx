@@ -5,28 +5,7 @@ import '../../styles/menuUsuarios.css';
 import { useLocation } from 'react-router-dom'; // Para pegar o idTarefa da navegação
 
 export default function Avaliacao() {
-    //-----------------------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    //-----------------------------------------------------------------------------------------------------------------------
     const [nomeUsuario, setNomeUsuario] = useState('');
     const { state } = useLocation(); // Pegando o idTarefa passado via state
     const idTarefa = state?.idTarefa; // idTarefa passado por state
@@ -35,6 +14,7 @@ export default function Avaliacao() {
         const usuario = JSON.parse(localStorage.getItem('usuario'));
         if (usuario) {
             setNomeUsuario(usuario.matricula);
+            setNomeUsuario(usuario.tipo);
         }
     }, []);
 
@@ -137,17 +117,42 @@ export default function Avaliacao() {
 
     return (
         <>
-            <div className="container">
-                {/* Lista as entregas filtradas pela idTarefa */}
-                <ul className="list-group">
-                    {entregas.filter(entrega => entrega.idTarefa === idTarefa).map(entrega => (
-                        <li key={entrega.idEntrega} className="list-group-item d-flex justify-content-between align-items-center">
-                            <p>{`Matrícula: ${entrega.matricula}`}</p>
-                            <Button onClick={() => handleShowModal(entrega)}>Avaliar</Button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            {nomeUsuario === 'Professor' && (
+                <div className="container">
+                    {/* Lista as entregas filtradas pela idTarefa */}
+                    <ul className="list-group">
+                        {entregas.filter(entrega => entrega.idTarefa === idTarefa).map(entrega => (
+                            <li key={entrega.idEntrega} className="list-group-item d-flex justify-content-between align-items-center">
+                                <p>{`Matrícula: ${entrega.matricula}`}</p>
+                                <Button onClick={() => handleShowModal(entrega)}>Avaliar</Button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            {nomeUsuario === 'Aluno' && (
+                <div className="container">
+                    {/* Botão para o aluno acessar o modal de entrega da tarefa */}
+                    <button
+                        className="btn btn-success"
+                        onClick={() => handleShowModal({
+                            idEntrega: 0, // Nova entrega (id zero para identificar que é uma nova submissão)
+                            idTarefa: idTarefa, // ID da tarefa passada pelo state
+                            matricula: nomeUsuario, // Matrícula do aluno logado
+                            dataEntrega: '', // Data será preenchida no backend ou no envio
+                            arquivo: '', // Conteúdo a ser preenchido pelo aluno
+                            nota: 0, // Nota padrão zero, só para inicializar
+                            idTarefaNavigation: null,
+                            matriculaNavigation: null,
+                        })}
+                    >
+                        Entregar Tarefa
+                    </button>
+                </div>
+            )}
+
+
+
 
             {/* Modal para adicionar ou editar entrega */}
             <Modal show={showModal} onHide={handleCloseModal}>
@@ -162,6 +167,7 @@ export default function Avaliacao() {
                                 className="form-control"
                                 id="arquivoInput"
                                 name="arquivo"
+                                readOnly={nomeUsuario === 'Professor'}
                                 rows="6" // Definindo a quantidade de linhas visíveis da área de texto
                                 onChange={handleTextChange} // Usando a função para tratar o texto
                                 placeholder="Digite sua resposta aqui..."
@@ -169,18 +175,21 @@ export default function Avaliacao() {
                             />
                         </div>
 
-                        <div className="col-6">
-                            <label htmlFor="notaInput" className="form-label">Nota</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="notaInput"
-                                name="nota"
-                                value={novaEntrega.nota}
-                                onChange={handleInputChange}
-                                placeholder="Nota"
-                            />
-                        </div>
+                        {nomeUsuario === 'Professor' && (
+                            <div className="col-12">
+                                <label htmlFor="notaInput" className="form-label">Nota</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="notaInput"
+                                    name="nota"
+                                    value={novaEntrega.nota}
+                                    onChange={handleInputChange}
+                                    placeholder="Nota"
+                                />
+                            </div>
+                        )}
+
                     </form>
                 </Modal.Body>
                 <Modal.Footer>

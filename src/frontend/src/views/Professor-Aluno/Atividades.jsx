@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';  // Importar useLocation para acessar o state
 import '../../styles/menuUsuarios.css';
+import Avaliacao from './Avaliacao';
 
 export default function Atividade() {
     const [atividades, setAtividades] = useState([]);
@@ -188,39 +189,109 @@ export default function Atividade() {
                                 {`Módulo ${modulo.modulo}`}
                             </button>
                         </h2>
-                        <div id={`collapse${modulo.modulo.replace(' ', '-')}`} className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+
+                        <div
+                            id={`collapse${modulo.modulo.replace(' ', '-')}`}
+                            className="accordion-collapse collapse show"
+                            data-bs-parent="#accordionExample"
+                        >
                             <div className="accordion-body">
                                 <ul className="list-group">
                                     {modulo.itens.map(atividade => (
-                                        <li key={atividade.idTarefa} className="list-group-item d-flex justify-content-between align-items-center">
-                                            <a target="_blank" href={atividade.linkArquivoTarefa}>
-                                                <p>Disponível até {atividade.dataEntrega} | {atividade.valor} pts</p>
-                                            </a>
-                                            {nomeUsuario === 'Professor' && (
-                                                <div>
-                                                    <button className="btn btn-primary ms-2" onClick={() => handleEditTarefa(atividade)}>
-                                                        <i className="fa-regular fa-pen-to-square"></i>
-                                                    </button>
-                                                    <button className="btn btn-danger ms-2" onClick={() => handleShowDeleteModal(atividade)}>
-                                                        <i className="fa-regular fa-trash-can"></i>
-                                                    </button>
-                                                    {nomeUsuario === 'Professor' && (
-                                                        <Link to="/usuario/avaliacao" state={{ idTarefa: atividade.idTarefa }}>
-                                                            <button className="btn btn-success ms-2">
-                                                                Avaliar Entregas
-                                                            </button>
-                                                        </Link>
-                                                    )}
-                                                </div>
-                                            )}
-                                            {nomeUsuario === 'Aluno' && (
-                                                <div>
-                                                    <button className="btn btn-success ms-2" onClick={() => handleEditTarefa(atividade)}>
-                                                        Entregar Tarefa
-                                                    </button>
-                                                </div>
-                                            )}
+                                        <li
+                                            key={atividade.idTarefa}
+                                            className="list-group-item"
+                                            style={{ cursor: 'pointer' }} // Indicando que o item é clicável
+                                        >
+                                            <div className="row">
 
+
+                                                <div className="col-12">
+
+                                                    {/* Botões de edição e exclusão de tarefa */}
+                                                    <div className="d-flex justify-content-between align-items-center">
+                                                        {/* Link à esquerda */}
+
+                                                        <div className="d-flex">
+                                                            <a target="_blank" href={atividade.linkArquivoTarefa}>
+                                                                <p>Disponível até {atividade.dataEntrega} | {atividade.valor} pts</p>
+                                                            </a>
+                                                        </div>
+
+
+                                                        {/* Botões alinhados à direita */}
+                                                        <div className="d-flex">
+                                                            {nomeUsuario === 'Professor' && (
+                                                                <>
+                                                                    <button
+                                                                        className="btn btn-primary ms-2"
+                                                                        onClick={() => handleEditTarefa(atividade)}
+                                                                    >
+                                                                        <i className="fa-regular fa-pen-to-square"></i>
+                                                                    </button>
+                                                                    <button
+                                                                        className="btn btn-danger ms-2"
+                                                                        onClick={() => handleShowDeleteModal(atividade)}
+                                                                    >
+                                                                        <i className="fa-regular fa-trash-can"></i>
+                                                                    </button>
+
+                                                                    {/* Botão Avaliar Tarefa para ativar o colapso */}
+                                                                    <Link
+                                                                      
+                                                                        state={{ idTarefa: atividade.idTarefa }}
+                                                                    >
+                                                                        <button
+                                                                            className="btn btn-success ms-2"
+                                                                            data-bs-toggle="collapse"
+                                                                            data-bs-target={`#collapseDetalhes-${atividade.idTarefa}`}
+                                                                            aria-expanded="false"
+                                                                            aria-controls={`collapseDetalhes-${atividade.idTarefa}`}
+                                                                        >
+                                                                            Avaliar Entregas
+                                                                        </button>
+                                                                    </Link>
+                                                                </>
+                                                            )}
+                                                            <div className="d-flex">
+                                                                {nomeUsuario === 'Aluno' && (
+                                                            
+                                                                    <>
+                                                                    <Link
+                                                                      
+                                                                        state={{ idTarefa: atividade.idTarefa }}
+                                                                    >
+                                                                        <button
+                                                                            className="btn btn-success ms-2"
+                                                                            data-bs-toggle="collapse"
+                                                                            data-bs-target={`#collapseDetalhes-${atividade.idTarefa}`}
+                                                                            aria-expanded="false"
+                                                                            aria-controls={`collapseDetalhes-${atividade.idTarefa}`}
+                                                                        >
+                                                                            Entregar Tarefa
+                                                                        </button>
+                                                                    </Link>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+
+                                                {/* Área de conteúdo expandido */}
+                                                <div
+                                                    id={`collapseDetalhes-${atividade.idTarefa}`}
+                                                    className="accordion-collapse collapse mt-3"
+                                                    data-bs-parent={`#collapse${modulo.modulo.replace(' ', '-')}`}
+                                                >
+                                                    <div className="accordion-body">
+                                                        <Avaliacao />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
@@ -229,6 +300,8 @@ export default function Atividade() {
                     </div>
                 ))}
             </div>
+
+
 
             {/* Modal para adicionar ou editar tarefa */}
             <Modal show={showModal} onHide={handleCloseModal}>
