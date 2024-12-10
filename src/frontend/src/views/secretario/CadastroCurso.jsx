@@ -44,7 +44,7 @@ const addDisciplina = async (disciplina) => {
   try {
     const response = await api.post('Disciplina', disciplina);
     setDisciplinas([...disciplinas, response.data]);
-    fecharModal();
+   fecharModal();
   } catch (error) {
     setErrorMessage('Erro ao adicionar disciplina');
     setTimeout(() => {
@@ -73,17 +73,13 @@ const editarDisciplina = async (disciplina) => {
 
 // Função para excluir disciplina
 const excluirDisciplina = async (idDisciplina) => {
-  try {
+
     const response = await api.delete(`Disciplina/${idDisciplina}`);
     if (response.status === 200) {
       setDisciplinas(disciplinas.filter((disc) => disc.idDisciplina !== idDisciplina));
     }
-  } catch (error) {
-    setErrorMessage('Erro ao excluir disciplina');
-    setTimeout(() => {
-      setErrorMessage('');
-    }, 3000);
-  }
+     fecharModal();
+
 };
 
   // Função para fechar o modal

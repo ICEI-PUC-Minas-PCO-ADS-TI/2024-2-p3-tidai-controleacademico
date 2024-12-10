@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Modal } from 'react-bootstrap';
 
-const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
+const DisciplinaForm = ({ idCurso, disciplinas, fecharModal, excluirDisciplina, editarDisciplina, addDisciplina }) => {
   const [disciplina, setDisciplina] = useState({
     idDisciplinas: 0,
     nome: '',
@@ -11,6 +11,8 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
 
   const [disciplinasListadas, setDisciplinasListadas] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null); // Armazena o ID da disciplina a ser excluída
 
   // Sincroniza disciplinasListadas com disciplinas (props)
   useEffect(() => {
@@ -32,17 +34,11 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
 
     // Verifique se está adicionando ou editando a disciplina
     if (disciplina.idDisciplinas === 0) {
-      const novoId = disciplinasListadas.length
-        ? Math.max(...disciplinasListadas.map((d) => d.idDisciplinas)) + 1
-        : 1;
-      const novaDisciplina = { ...disciplina, idDisciplinas: novoId };
-      setDisciplinasListadas([...disciplinasListadas, novaDisciplina]);
+      // Adicionando nova disciplina
+      addDisciplina(disciplina); // Chama a função para adicionar disciplina
     } else {
-      setDisciplinasListadas(
-        disciplinasListadas.map((d) =>
-          d.idDisciplinas === disciplina.idDisciplinas ? disciplina : d
-        )
-      );
+      // Editando disciplina existente
+      editarDisciplina(disciplina); // Chama a função para editar disciplina
     }
 
     resetForm();
@@ -51,7 +47,6 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
   const handleEdit = (id) => {
     const disciplinaParaEditar = disciplinasListadas.find((d) => d.idDisciplinas === id);
     if (disciplinaParaEditar) {
-      // Atualiza o estado e exibe o formulário após a atualização
       setDisciplina(disciplinaParaEditar);
       setShowForm(true);
     }
@@ -67,9 +62,24 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
     setShowForm(false);
   };
 
+  // Abre o modal de exclusão
+  const handleDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  // Função para excluir a disciplina
+  const handleDelete = () => {
+    if (deleteId !== null) {
+      excluirDisciplina(deleteId);  // Chama a função passar para excluir na API ou na lista
+      setDeleteId(null);  // Reseta o ID da disciplina a ser excluída
+      setShowDeleteModal(false);  // Fecha o modal de exclusão
+    }
+  };
+
   return (
     <>
-      <Table striped bordered hover>
+      <Table striped hover>
         <thead>
           <tr>
             <th>Disciplina</th>
@@ -92,9 +102,11 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
                 </button>
               </td>
               <td>
-                <button className='btn btn-outline-danger'>
-                <i className="fa-regular fa-trash-can"></i>
-
+                <button
+                  onClick={() => handleDeleteModal(d.idDisciplinas)}  // Abre o modal de exclusão
+                  className="btn btn-outline-danger"
+                >
+                  <i className="fa-regular fa-trash-can"></i>
                 </button>
               </td>
             </tr>
@@ -102,35 +114,37 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
         </tbody>
       </Table>
 
-      <Button onClick={handleNovoClick} variant="primary" className="mt-3">
-        Novo
-      </Button>
-
       {showForm && (
         <div className="bg-primary-subtle p-4 rounded-3 shadow-sm mt-3">
-          <h6>Adicionar / Editar Disciplina</h6>
+          <h5><b>Adicionar / Editar Disciplina</b></h5>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Nome da Disciplina</label>
-              <input
-                type="text"
-                className="form-control"
-                name="nome"
-                onChange={inputTextHandler}
-                value={disciplina.nome}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="semestre" className="form-label">Semestre</label>
-              <input
-                type="number"
-                className="form-control"
-                name="semestre"
-                onChange={inputTextHandler}
-                value={disciplina.semestre}
-                required
-              />
+            <div className="row">
+              <div className='col-8'>
+                <div className="mb-3">
+                  <label className="form-label">Nome da Disciplina</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="nome"
+                    onChange={inputTextHandler}
+                    value={disciplina.nome}
+                    required
+                  />
+                </div>
+              </div>
+              <div className='col-4'>
+                <div className="mb-3">
+                  <label htmlFor="semestre" className="form-label">Semestre</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="semestre"
+                    onChange={inputTextHandler}
+                    value={disciplina.semestre}
+                    required
+                  />
+                </div>
+              </div>
             </div>
             <div className="d-flex justify-content-between">
               <Button variant="secondary" onClick={() => setShowForm(false)}>
@@ -143,6 +157,33 @@ const DisciplinaForm = ({ idCurso, disciplinas, fecharModal }) => {
           </form>
         </div>
       )}
+
+      <div className="modal-footer border-top mt-3">
+        <Button onClick={fecharModal} variant="secondary">
+          Fechar
+        </Button>
+        <Button onClick={handleNovoClick} variant="primary">
+          Novo
+        </Button>
+      </div>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Exclusão</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Tem certeza que deseja excluir esta disciplina?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Excluir
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

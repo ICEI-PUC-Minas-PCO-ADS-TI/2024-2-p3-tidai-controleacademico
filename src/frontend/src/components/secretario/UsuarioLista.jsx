@@ -21,16 +21,17 @@ export default function UsuarioLista(props) {
                     <td>{usuario.endereco}</td>
                     <td>{usuario.tipo}</td>
                     <td>
-                        <button
-                            type="button"
-                            className={`btn ${usuario.tipo === 'Secretário' ? 'btn btn-outline-secondary' : 'btn-outline-info'}`}
-                            onClick={() => {
-                                props.handleDisciplinaModal(usuario.matricula); // Chama pegarUsuario
-                            }}
-                            disabled={usuario.tipo === 'Secretário'} // Desabilita o botão se o tipo for 'Secretario'
-                        >
-                            Disciplinas
-                        </button>
+                    <button
+    type="button"
+    className={`btn ${usuario.tipo === 'Secretário' ? 'btn btn-outline-secondary' : 'btn-outline-info'}`}
+    onClick={() => {
+        props.handleDisciplinaModal(usuario.matricula); // Passando matrícula para abrir o modal
+    }}
+    disabled={usuario.tipo === 'Secretário'} // Desabilita o botão se o tipo for 'Secretário'
+>
+    Disciplinas
+</button>
+
                     </td>
                     <td>
                         <button
