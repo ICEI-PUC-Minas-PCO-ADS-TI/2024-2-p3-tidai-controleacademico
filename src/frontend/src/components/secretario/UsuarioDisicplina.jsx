@@ -36,7 +36,24 @@ const UsuarioDisciplina = () => {
             const response = await api.get('Disciplina');
             const todasDisciplinas = response.data;
             const disciplinasDoCurso = todasDisciplinas.filter(disciplina => disciplina.idCurso === idCurso);
-            setDisciplinas(disciplinasDoCurso);
+
+            // Agrupar as disciplinas por semestre
+            const disciplinasAgrupadas = disciplinasDoCurso.reduce((acc, disciplina) => {
+                const semestre = disciplina.semestre;
+                if (!acc[semestre]) {
+                    acc[semestre] = [];
+                }
+                acc[semestre].push(disciplina);
+                return acc;
+            }, {});
+
+            // Converte o objeto em um array de semestres ordenados
+            const disciplinasOrdenadas = Object.keys(disciplinasAgrupadas).sort().map(semestre => ({
+                semestre: semestre,
+                disciplinas: disciplinasAgrupadas[semestre]
+            }));
+
+            setDisciplinas(disciplinasOrdenadas);
         } catch (error) {
             console.error('Erro ao carregar disciplinas:', error);
         }
@@ -47,86 +64,108 @@ const UsuarioDisciplina = () => {
         setCurso(Number(e.target.value));
     };
 
-    // Função para lidar com a seleção das disciplinas
-    const handleDisciplinaChange = (e, idDisciplina) => {
-        if (e.target.checked) {
-            setDisciplinasSelecionadas([...disciplinasSelecionadas, idDisciplina]);
-        } else {
-            setDisciplinasSelecionadas(disciplinasSelecionadas.filter(id => id !== idDisciplina));
+    // Função para adicionar ou remover disciplina
+    const handleDisciplinaAction = (action, idDisciplina) => {
+        if (action === 'adicionar') {
+            setDisciplinasSelecionadas(prev => [...prev, idDisciplina]);
+        } else if (action === 'remover') {
+            setDisciplinasSelecionadas(prev => prev.filter(id => id !== idDisciplina));
         }
     };
 
-    // Função para enviar as disciplinas selecionadas
     const handleSubmit = async () => {
+        const disciplinasParaAdicionar = disciplinasSelecionadas.map(id => ({
+            matricula: matricula,
+            idDisciplinas: id,
+            idDisciplinasNavigation: null,
+            matriculaNavigation: null,
+            presencas: []  // Enviando um array vazio, conforme esperado
+        }));
+
+        const disciplinasParaRemover = disciplinas
+            .flatMap(grupo => grupo.disciplinas)
+            .filter(disciplina => !disciplinasSelecionadas.includes(disciplina.idDisciplina))
+            .map(disciplina => ({
+                matricula: matricula,
+                idDisciplinas: disciplina.idDisciplina,
+                idDisciplinasNavigation: null,
+                matriculaNavigation: null,
+                presencas: []  // Enviando um array vazio, conforme esperado
+            }));
+
+        // Agora, criar o corpo para enviar para a API
         const body = {
             matricula: matricula,
-            idDisciplinas: disciplinasSelecionadas
+            disciplinasParaAdicionar: disciplinasParaAdicionar,
+            disciplinasParaRemover: disciplinasParaRemover
         };
 
         try {
-            const response = await api.post('/usuario/disciplinas', body); // Envia as disciplinas para a API
+            // Enviar as disciplinas para a API
+            const response = await api.post('DisciplinasUsuario', body);
             console.log('Disciplinas enviadas com sucesso:', response);
         } catch (error) {
-            console.error('Erro ao enviar disciplinas:', error);
+            console.error('Erro ao enviar disciplinas:', error.response ? error.response.data : error);
         }
     };
 
     return (
-        <div>
-            <form>
-                <div className="col-12 bg-light">
-                    <label htmlFor="curso" className="form-label">Curso</label>
-                    <select id="curso" className="form-select" onChange={handleCursoChange}>
-                        <option value={0}>Selecione</option>
-                        {cursos.length > 0 ? (
-                            cursos.map((curso) => (
-                                <option key={curso.idCursos} value={curso.idCursos}>
-                                    {curso.nome}
-                                </option>
+
+        <form>
+            <div className="col-12 bg-light">
+                <label htmlFor="curso" className="form-label">Curso</label>
+                <select id="curso" className="form-select" onChange={handleCursoChange}>
+                    <option value={0}>Selecione</option>
+                    {cursos.length > 0 ? (
+                        cursos.map((curso) => (
+                            <option key={curso.idCursos} value={curso.idCursos}>
+                                {curso.nome}
+                            </option>
+                        ))
+                    ) : (
+                        <option disabled>Carregando cursos...</option>
+                    )}
+                </select>
+
+                {/* Lista de disciplinas agrupadas por semestre */}
+                {curso !== 0 && (
+                    <div className="row mt-3">
+                        {disciplinas.length > 0 ? (
+                            disciplinas.map((grupo) => (
+                                <div key={grupo.semestre} className="col-12">
+                                    <h6>{grupo.semestre}° Semestre</h6>
+                                    {grupo.disciplinas.map((disciplina) => (
+                                        <div className="d-flex justify-content-between align-items-center" key={disciplina.idDisciplina}>
+                                            <span>{disciplina.nome}</span>
+                                            <div>
+                                                <Button
+                                                    variant="success"
+                                                    onClick={() => handleDisciplinaAction('adicionar', disciplina.idDisciplina)}
+                                                    disabled={disciplinasSelecionadas.includes(disciplina.idDisciplina)}
+                                                >
+                                                    Adicionar
+                                                </Button>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={() => handleDisciplinaAction('remover', disciplina.idDisciplina)}
+                                                    disabled={!disciplinasSelecionadas.includes(disciplina.idDisciplina)}
+                                                    className="ms-2"
+                                                >
+                                                    Remover
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             ))
                         ) : (
-                            <option disabled>Carregando cursos...</option>
+                            <p>Carregando disciplinas...</p>
                         )}
-                    </select>
-
-                    {/* Lista de disciplinas agrupadas por semestre */}
-                    {curso !== 0 && (
-                        <div className="row mt-3">
-                            {disciplinas.length > 0 ? (
-                                disciplinas.map((disciplina) => (
-                                    <div className="col-6" key={disciplina.idDisciplina}>
-                                        <h6>{disciplina.semestre}° Semestre</h6>
-                                        <div className="form-check form-switch">
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                role="switch"
-                                                id={`flexSwitchCheck${disciplina.idDisciplina}`}
-                                                onChange={(e) => handleDisciplinaChange(e, disciplina.idDisciplina)}
-                                            />
-                                            <label
-                                                className="form-check-label"
-                                                htmlFor={`flexSwitchCheck${disciplina.idDisciplina}`}
-                                            >
-                                                {disciplina.nome}
-                                            </label>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>Carregando disciplinas...</p>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </form>
-            
-            <div className="mt-3">
-                <Button variant="primary" onClick={handleSubmit}>
-                    Enviar Disciplinas
-                </Button>
+                    </div>
+                )}
             </div>
-        </div>
+        </form>
+
     );
 };
 
