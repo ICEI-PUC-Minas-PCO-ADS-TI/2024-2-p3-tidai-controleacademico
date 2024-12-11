@@ -37,16 +37,16 @@ O link para acessar a aplicação está disponível abaixo:
 Existem três tipos de usuários disponíveis na aplicação, cada um com diferentes permissões e funcionalidades. Use as credenciais abaixo para fazer login de acordo com o tipo de usuário:
 
 #### 1. **Professor**
-- **Usuário:** `professor`
-- **Senha:** `12345`
+- **Usuário:** `1003`
+- **Senha:** `123`
 
 #### 2. **Aluno**
-- **Usuário:** `aluno`
-- **Senha:** `12345`
+- **Usuário:** `1001`
+- **Senha:** `123`
 
 #### 3. **Secretário**
-- **Usuário:** `admin`
-- **Senha:** `12345`
+- **Usuário:** `1002`
+- **Senha:** `123`
 
 # Documentação
 
