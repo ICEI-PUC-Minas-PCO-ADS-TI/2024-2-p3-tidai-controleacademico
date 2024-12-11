@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, Form } from 'react-bootstrap';
 
-const ChamadaProf = () => {
+const Chamada = () => {
     const [alunos, setAlunos] = useState([]);
     const [dataChamada, setDataChamada] = useState('');
     const [presencas, setPresencas] = useState({});
@@ -128,4 +128,4 @@ const ChamadaProf = () => {
     );
 };
 
-export default ChamadaProf;
+export default Chamada;

@@ -31,9 +31,9 @@ export default function Login() {
         localStorage.setItem('usuario', JSON.stringify({ matricula, nome, tipo }));
 
         if (tipo === 'Aluno') {
-          navigate('/aluno');
+          navigate('/usuario');
         } else if (tipo === 'Professor') {
-          navigate('/professor');
+          navigate('/usuario');
         } else if (tipo === 'Secretário') {
           navigate('/secretario');
         } else {

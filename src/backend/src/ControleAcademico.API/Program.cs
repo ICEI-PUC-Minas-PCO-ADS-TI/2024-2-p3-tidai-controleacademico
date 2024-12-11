@@ -27,9 +27,6 @@ builder.Services.AddScoped<IMaterialDisciplinaService, MaterialDisciplinaService
 builder.Services.AddScoped<ITarefasDisciplinaRepo, TarefaDisciplinaRepo>();
 builder.Services.AddScoped<ITarefaDisciplinaService, TarefaDisciplinaService>();
 
-builder.Services.AddScoped<INotasTarefasRepo, NotasTarefasRepo>();
-builder.Services.AddScoped<INotasTarefasService, NotasTarefasService>();
-
 builder.Services.AddScoped<IPresencaRepo, PresencaRepo>();
 builder.Services.AddScoped<IPresencaService, PresencaService>();
 

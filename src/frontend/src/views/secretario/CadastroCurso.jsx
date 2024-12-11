@@ -4,9 +4,100 @@ import '../../styles/index.css';
 import CursoForm from '../../components/secretario/CursoForm';
 import CursoLista from '../../components/secretario/CursoLista';
 import api from '../../api/api';
+import DisciplinaForm from '../../components/secretario/CursoDisciplinaForm';
 
 const ViewCadastroCurso = () => {
   const [errorMessage, setErrorMessage] = useState('');
+
+//---------------------------------------DISCIPLINAS----------------------------------------------------------------------------------------------------------------
+
+const [disciplinas, setDisciplinas] = useState([]);
+const [idCursoSelecionado, setIdCursoSelecionado] = useState(null);
+const [showModal, setShowModal] = useState(false);
+
+  // Função para abrir o modal e carregar as disciplinas
+  const abrirModalDisciplinas = (idCurso) => {
+    setIdCursoSelecionado(idCurso); // Armazena o id do curso
+    setShowModal(true); // Abre o modal
+  };
+
+  // Função para carregar as disciplinas do curso
+  const carregarDisciplinas = async (idCurso) => {
+    try {
+      const response = await api.get('Disciplina');
+      if (response.status !== 200) {
+        throw new Error('Erro ao carregar as disciplinas');
+      }
+
+      const todasDisciplinas = response.data;
+      const disciplinasDoCurso = todasDisciplinas.filter(disciplina => disciplina.idCurso === idCurso);
+      setDisciplinas(disciplinasDoCurso);
+    } catch (error) {
+      console.error('Erro ao carregar disciplinas:', error);
+    }
+  };
+
+
+
+// Função para adicionar disciplina
+const addDisciplina = async (disciplina) => {
+  try {
+    const response = await api.post('Disciplina', disciplina);
+    setDisciplinas([...disciplinas, response.data]);
+   fecharModal();
+  } catch (error) {
+    setErrorMessage('Erro ao adicionar disciplina');
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 3000);
+  }
+};
+
+// Função para editar disciplina
+const editarDisciplina = async (disciplina) => {
+  try {
+    const response = await api.put(`Disciplina/${disciplina.idDisciplina}`, disciplina);
+    setDisciplinas(
+      disciplinas.map((item) =>
+        item.idDisciplina === disciplina.idDisciplina ? response.data : item
+      )
+    );
+    fecharModal();
+  } catch (error) {
+    setErrorMessage('Erro ao editar disciplina');
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 3000);
+  }
+};
+
+// Função para excluir disciplina
+const excluirDisciplina = async (idDisciplina) => {
+
+    const response = await api.delete(`Disciplina/${idDisciplina}`);
+    if (response.status === 200) {
+      setDisciplinas(disciplinas.filter((disc) => disc.idDisciplina !== idDisciplina));
+    }
+     fecharModal();
+
+};
+
+  // Função para fechar o modal
+  const fecharModal = () => {
+    setShowModal(false);
+    setIdCursoSelecionado(null); // Reseta o id do curso ao fechar o modal
+  };
+
+  // UseEffect que vai disparar sempre que o idCursoSelecionado mudar
+  useEffect(() => {
+    if (idCursoSelecionado !== null) {
+      carregarDisciplinas(idCursoSelecionado); // Carrega as disciplinas quando o curso é selecionado
+    }
+  }, [idCursoSelecionado]); // Dependência no idCursoSelecionado
+
+
+//---------------------------------------CURSOS----------------------------------------------------------------------------------------------------------------
+
   const [showCursoModal, setShowCursoModal] = useState(false);
   const [smShowConfirmModal, setSmShowConfirmModal] = useState(false);
   const [cursos, setCursos] = useState([]);
@@ -35,15 +126,15 @@ const ViewCadastroCurso = () => {
     return response.data;
   };
 
-useEffect(() => {
-  const getCursos = async () => {
-    const todosCursos = await pegaTodosCursos();
-    // Filtra cursos para remover os com idCursos = 0
-    const cursosFiltrados = todosCursos.filter(curso => curso.idCursos !== 0);
-    setCursos(cursosFiltrados);
-  };
-  getCursos();
-}, []);
+  useEffect(() => {
+    const getCursos = async () => {
+      const todosCursos = await pegaTodosCursos();
+      // Filtra cursos para remover os com idCursos = 0
+      const cursosFiltrados = todosCursos.filter(curso => curso.idCursos !== 0);
+      setCursos(cursosFiltrados);
+    };
+    getCursos();
+  }, []);
 
   const addCurso = async (curso) => {
     handleCursoModal();
@@ -53,7 +144,6 @@ useEffect(() => {
 
   const deletarCurso = async (idCursos) => {
     handleConfirmModal(0);
-  
     try {
       const response = await api.delete(`Curso/${idCursos}`);
       if (response.status === 200) {
@@ -70,7 +160,6 @@ useEffect(() => {
       }, 3000);
     }
   };
-  
 
   const pegarCurso = (idCursos) => {
     const cursoSelecionado = cursos.find((curso) => curso.idCursos === idCursos);
@@ -162,19 +251,22 @@ useEffect(() => {
           </button>
         </div>
       </div>
+      
       {errorMessage && (
-          <div className="alert alert-danger mt-3">
-            {errorMessage}
-          </div>
-        )}
+        <div className="alert alert-danger mt-3">
+          {errorMessage}
+        </div>
+      )}
+
       {/* Lista de Cursos */}
       <CursoLista
         cursos={cursos}
+        abrirModalDisciplinas={abrirModalDisciplinas}
         pegarCurso={pegarCurso}
         handleConfirmModal={handleConfirmModal}
       />
 
-      {/* Modal de Formulário*/}
+      {/* Modal de Formulário CURSOS*/}
       <Modal show={showCursoModal} onHide={handleCursoModal}>
         <Modal.Header closeButton>
           <Modal.Title>Registro de Curso</Modal.Title>
@@ -185,6 +277,23 @@ useEffect(() => {
             atualizarCurso={atualizarCurso}
             cancelarCurso={cancelarCurso}
             cursoSelecionado={curso}
+          />
+        </Modal.Body>
+      </Modal>
+
+      {/* Modal de Formulário DISCIPLINAS */}
+      <Modal show={showModal} onHide={fecharModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cadastro de Disciplinas</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <DisciplinaForm
+            idCurso={idCursoSelecionado} // Passa o idCurso para o Formulário
+            disciplinas={disciplinas} // Passa as disciplinas cadastradas
+            addDisciplina={addDisciplina} // Função para adicionar disciplina
+            editarDisciplina={editarDisciplina} // Função para editar disciplina
+            excluirDisciplina={excluirDisciplina} // Função para excluir disciplina
+            fecharModal={fecharModal}
           />
         </Modal.Body>
       </Modal>
@@ -207,9 +316,6 @@ useEffect(() => {
           </button>
         </Modal.Footer>
       </Modal>
-
-
-      
     </div>
   );
 };

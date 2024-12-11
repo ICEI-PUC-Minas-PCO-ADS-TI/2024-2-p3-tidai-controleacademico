@@ -14,7 +14,6 @@ public partial class Usuario
     public int IdCurso { get; set; }
 
     public virtual Curso? IdCursoNavigation { get; set; } = null!;
-    public virtual ICollection<NotasTarefa> NotasTarefas { get; set; } = new List<NotasTarefa>();
     public virtual ICollection<DisciplinasUsuario> DisciplinasUsuarios { get; set; } = new HashSet<DisciplinasUsuario>();
     public virtual ICollection<EntregarTarefa> EntregarTarefas { get; set; } = new List<EntregarTarefa>();
 

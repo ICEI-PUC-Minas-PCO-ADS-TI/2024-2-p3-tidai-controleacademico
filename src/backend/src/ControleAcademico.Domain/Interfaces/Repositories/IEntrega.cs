@@ -6,6 +6,6 @@ namespace ControleAcademico.Domain.Interfaces.Repositories
     public interface IEntregarTarefaRepo : IgeralRepo
     {
         Task<EntregarTarefa[]> PegarTodasAsync();
-        Task<EntregarTarefa[]> PegarMaterialPorTudoAsync(int IdEntregarTarefa, int IdTarefa, int Matricula, DateTime DataEntrega, string Arquivo);
+        Task<EntregarTarefa[]> PegarMaterialPorTudoAsync(int? IdEntregarTarefa=null, int? IdTarefa=null, int?Matricula=null,  DateTime? DataEntrega=null, string? Arquivo=null, int? Nota=null);
     }
 }

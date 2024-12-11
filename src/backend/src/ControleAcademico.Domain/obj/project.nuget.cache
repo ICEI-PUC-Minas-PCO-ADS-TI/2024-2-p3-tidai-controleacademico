@@ -1,8 +1,19 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "5oxCCLdV8+cmaV2MUmjhb6egzNPzuPRl3m5CnL+pp0Rdem3bD2GHV+GQJDcQtSoQberJtvaUX3YoLDExf0vT3A==",
   "success": true,
   "projectFilePath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
   "expectedPackageFiles": [],
+=======
+  "dgSpecHash": "Wz5GImz28Uy5W+/brgypAuwqGllA2XkWCSx2mMEwaMkXCdE7CwTF9fQZtwNDRDcp8hK3dqK9+OEPCU01EYRazQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\emanu\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.31\\microsoft.netcore.app.ref.6.0.31.nupkg.sha512",
+    "C:\\Users\\emanu\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.31\\microsoft.windowsdesktop.app.ref.6.0.31.nupkg.sha512",
+    "C:\\Users\\emanu\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.31\\microsoft.aspnetcore.app.ref.6.0.31.nupkg.sha512"
+  ],
+>>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
   "logs": []
 }

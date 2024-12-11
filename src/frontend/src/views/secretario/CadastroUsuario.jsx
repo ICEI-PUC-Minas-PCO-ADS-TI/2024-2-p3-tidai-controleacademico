@@ -16,8 +16,17 @@ const ViewCadastroUser = () => {
 
   const handleUsuarioModal = () =>
     setShowUsuarioModal(!showUsuarioModal);
-  const handleDisciplinaModal = () =>
-    setShowUsuarioModal(!showUsuarioModal);
+  const handleDisciplinaModal = (matricula) => {
+    if (matricula === 0) {
+      setshowShowDisciplinaModal(false);  // Fecha o modal
+    } else {
+      setUsuario({ matricula }); // Define a matrícula do usuário no estado
+      setshowShowDisciplinaModal(true); // Abre o modal de disciplinas
+    }
+  };
+  
+
+
 
   const handleConfirmModal = (matricula) => {
     if (matricula !== 0 && matricula !== undefined) {
@@ -282,29 +291,28 @@ const ViewCadastroUser = () => {
         </Modal>
 
         <Modal
-          show={showShowDisciplinaModal}
-          onHide={handleDisciplinaModal}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Disciplinas do Usuário
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <UsuarioDisciplina />
-          </Modal.Body>
-          <Modal.Footer className='d-flex justify-content-between'>
-            <button>
-              Fechar
-            </button>
-            <button
-              className='btn btn-danger me-2'
-              onClick={() => handleDisciplinaModal(0)}
-            >
-              Salvar
-            </button>
-          </Modal.Footer>
-        </Modal>
+  show={showShowDisciplinaModal}
+  onHide={() => handleDisciplinaModal(0)} // Passa 0 para fechar o modal
+>
+  <Modal.Header closeButton>
+    <Modal.Title>
+      Disciplinas do Usuário
+    </Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <UsuarioDisciplina />
+  </Modal.Body>
+  <Modal.Footer className='d-flex justify-content-between'>
+    <button onClick={() => handleDisciplinaModal(0)}>Fechar</button> {/* Também passa 0 para fechar */}
+    <button
+      className='btn btn-danger me-2'
+      onClick={() => handleDisciplinaModal(0)}
+    >
+      Salvar
+    </button>
+  </Modal.Footer>
+</Modal>
+
 
       </div>
     </div>

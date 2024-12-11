@@ -1536,11 +1536,16 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\davil\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\emanu\\.nuget\\packages\\": {}
+>>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.API\\ControleAcademico.API.csproj",
       "projectName": "ControleAcademico.API",
       "projectPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.API\\ControleAcademico.API.csproj",
@@ -1549,6 +1554,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\davil\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+      "projectUniqueName": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.API\\ControleAcademico.API.csproj",
+      "projectName": "ControleAcademico.API",
+      "projectPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.API\\ControleAcademico.API.csproj",
+      "packagesPath": "C:\\Users\\emanu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.API\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\emanu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -1560,11 +1575,19 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {
               "projectPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj"
             },
             "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
               "projectPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj"
+=======
+            "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {
+              "projectPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj"
+            },
+            "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
+              "projectPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj"
+>>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
             }
           }
         }
@@ -1615,6 +1638,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.31, 6.0.31]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.31, 6.0.31]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.31, 6.0.31]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.31, 6.0.31]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -1623,7 +1664,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.427\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
+>>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
       }
     }
   }
