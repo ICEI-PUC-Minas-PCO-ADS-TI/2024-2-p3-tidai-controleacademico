@@ -36,7 +36,9 @@ Presença:
 Atributos: Data, Status de Presença
 
 > **Links úteis**:
-![alt text](<bancodedados.jpg>)
+![image](https://github.com/user-attachments/assets/e27c9633-4ccb-4357-8246-b925cde3f641)
+
+>)
 
 #
 
