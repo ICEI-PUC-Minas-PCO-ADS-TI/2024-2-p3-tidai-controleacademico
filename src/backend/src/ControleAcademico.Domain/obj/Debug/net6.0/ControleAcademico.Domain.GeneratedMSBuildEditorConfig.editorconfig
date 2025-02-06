@@ -5,11 +5,6 @@ build_property.UsingMicrosoftNETSdkWeb =
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
-build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ControleAcademico.Domain
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\davil\OneDrive\Documentos\GitHub\AAA\src\backend\src\ControleAcademico.Domain\
-=======
-build_property.ProjectDir = C:\Users\emanu\Documents\controle_academico\2024-2-p3-tidai-controleacademico\src\backend\src\ControleAcademico.Domain\
->>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
+build_property.ProjectDir = c:\Users\pedro\OneDrive\Documentos\Front\2024-2-p3-tidai-controleacademico\src\backend\src\ControleAcademico.Domain\

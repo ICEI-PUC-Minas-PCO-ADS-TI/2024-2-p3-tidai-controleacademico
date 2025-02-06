@@ -1,55 +1,40 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {}
+    "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {
+    "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj",
+        "projectUniqueName": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj",
         "projectName": "ControleAcademico.Data",
-        "projectPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj",
-        "packagesPath": "C:\\Users\\davil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Data\\obj\\",
+        "projectPath": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj",
+        "packagesPath": "C:\\Users\\pedro\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\davil\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-    "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj",
-        "projectName": "ControleAcademico.Data",
-        "projectPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\ControleAcademico.Data.csproj",
-        "packagesPath": "C:\\Users\\emanu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Data\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\emanu\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
+          "C:\\Users\\pedro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-<<<<<<< HEAD
-              "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
-                "projectPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj"
-=======
-              "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
-                "projectPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj"
->>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
+              "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
+                "projectPath": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj"
               }
             }
           }
@@ -96,63 +81,38 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.427\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.428\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
+    "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
+        "projectUniqueName": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
         "projectName": "ControleAcademico.Domain",
-        "projectPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
-        "packagesPath": "C:\\Users\\davil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\davil\\OneDrive\\Documentos\\GitHub\\AAA\\src\\backend\\src\\ControleAcademico.Domain\\obj\\",
+        "projectPath": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
+        "packagesPath": "C:\\Users\\pedro\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\pedro\\OneDrive\\Documentos\\Front\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\davil\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
-        "projectName": "ControleAcademico.Domain",
-        "projectPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\ControleAcademico.Domain.csproj",
-        "packagesPath": "C:\\Users\\emanu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emanu\\Documents\\controle_academico\\2024-2-p3-tidai-controleacademico\\src\\backend\\src\\ControleAcademico.Domain\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\emanu\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
+          "C:\\Users\\pedro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -181,30 +141,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.31, 6.0.31]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.427\\RuntimeIdentifierGraph.json"
-=======
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
->>>>>>> e3e16f4d969b0f38ada912503d9e87c9716dafbc
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.428\\RuntimeIdentifierGraph.json"
         }
       }
     }
